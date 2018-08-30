@@ -10,8 +10,8 @@ Visualize significant conserved amino acid sequence pattern in groups based on p
 To install this package, start R and enter:
 
 ```r
-library(BiocInstaller)
-biocLite("dagLogo")
+library(BiocManager)
+BiocManager::install("dagLogo")
 ```
 
 ## Documentation
