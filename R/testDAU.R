@@ -1,3 +1,22 @@
+#' @title DAU test
+#' @description Performs DAU test
+#' @param dagPeptides an object of dagPeptides, output of \code{\link{fetchSequence}} or 
+#' \code{\link{formatSequence}}
+#' @param dagBackground an object of dagBackground, output of \code{\link{buildBackgroundModel}}
+#' @param group could be "null", "classic", "charge", "chemistry", "hydrophobicity"
+#' @param bgNoise if it is not NA, test will using a background by Dirichlet(1)-distributed random frequencies
+#'  with weight bg.noise. The value of bgNoise should be a number in the range of 0 to 1, eg. 0.05
+#' @return an object of testDAUresults ready for plotting
+#' @importFrom stats pnorm rgamma sd
+#' @export
+#' @author Jianhong Ou, Alexey Stukalov, Julie Zhu
+#' @examples
+#'   data("seq.example")
+#'   data("proteome.example")
+#'   bg <- buildBackgroundModel(seq.example, proteome=proteome.example)
+#'   t <- testDAU(seq.example, bg, bgNoise=0.05)
+#' @keywords misc
+
 testDAU <- function(dagPeptides, dagBackground, 
                     group=c("null", "classic", "charge", "chemistry", "hydrophobicity"),
                     bgNoise=NA){

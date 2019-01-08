@@ -103,6 +103,27 @@ if(interactive()){
 }
 ```
 
+
+If you have multiple anchorAA is represented by lower case of amino acid and you want 
+to filter the anchorAA by subset of them, you may want to have a try `cleanPeptides`.
+```{r fetchSequences4}
+if(interactive()){
+    dat <- read.csv(system.file("extdata", "peptides4dagLogo.csv",
+                package="dagLogo"))
+    dat <- cleanPeptides(dat, anchors = c("s", "t"))
+    mart <- useMart("ensembl", "hsapiens_gene_ensembl")
+    seq <- fetchSequence(toupper(as.character(dat$symbol)), 
+                         type="hgnc_symbol",
+                         anchorAA=as.character(dat$anchor),
+                         anchorPos=as.character(dat$peptides), 
+                         mart=mart, 
+                         upstreamOffset=7, 
+                         downstreamOffset=7)
+    head(seq@peptides)
+}
+```
+
+
 Sometimes you may already have the aligned peptides sequences in hand. You will use 
 formatSequence function to prepare an object of dagPeptides for further testing. To use 
 formatSequence, you need prepare the proteome by prepareProteome function.

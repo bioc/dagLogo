@@ -1,6 +1,51 @@
-##library(biomaRt)
-##mart <- useMart("ensembl", "dmelanogaster_gene_ensembl")
-##peptides <- fetchSequence(entrizIDs, NCBIsites, peptides, mart)
+#' @title fetch sequence by id
+#' @description  fetch amino acid sequence by given identifiers via biomaRt or proteome prepared by \code{\link{prepareProteome}}
+#' @param IDs A vector of Identifiers to retrieve peptides
+#' @param type type of identifiers
+#' @param anchorAA a vector of character, anchor Amino Acid
+#' @param anchorPos a vector of character or numeric, anchor position, for example, K121. 
+#' Or a vector of character with amino acid sequences. 
+#' If AA sequences is used, the anchorAA must be the a vector of character with single AA for each.
+#' @param mart an object of Mart
+#' @param proteome an object of Proteome, output of \code{\link{prepareProteome}}
+#' @param upstreamOffset an integer, upstream offset position
+#' @param downstreamOffset an integer, downstream offset position
+#' @import biomaRt
+#' @export
+#' @return an object of \code{\linkS4class{dagPeptides}}
+#' @author Jianhong Ou, Alexey Stukalov, Julie Zhu
+#' @seealso \code{\link{formatSequence}}
+#' @examples
+#' if(interactive()){
+#'   mart <- useMart("ensembl", "dmelanogaster_gene_ensembl")
+#'   dat <- read.csv(system.file("extdata", "dagLogoTestData.csv", package="dagLogo"))
+#'   seq <- fetchSequence(as.character(dat$entrez_geneid[1:5]), 
+#'                        anchorPos=as.character(dat$NCBI_site[1:5]), 
+#'                        mart=mart, 
+#'                        upstreamOffset=7, 
+#'                        downstreamOffset=7)
+#'   ## sample: use sequence as anchorPos
+#'   sequences <- seq@peptides
+#'   sequences[, 8] <- "k"
+#'   sequences <- apply(sequences, 1, paste, collapse="")
+#'   seq <- fetchSequence(as.character(seq@data$IDs),
+#'                        anchorAA="k",
+#'                        anchorPos=sequences,
+#'                        mart=mart,
+#'                        upstreamOffset=7,
+#'                        downstreamOffset=7)
+#'   ## sample: use sequence as anchorPos 2
+#'   sequences <- cbind(seq@peptides[, 1:8], "*", seq@peptides[, 9:15])
+#'   sequences <- apply(sequences, 1, paste, collapse="")
+#'   seq <- fetchSequence(as.character(seq@data$IDs),
+#'                        anchorAA="*",
+#'                        anchorPos=sequences,
+#'                        mart=mart,
+#'                        upstreamOffset=7,
+#'                        downstreamOffset=7)
+#' }
+#' @keywords misc
+
 fetchSequence <- function(IDs, type="entrezgene", anchorAA=NULL, anchorPos,
                             mart, proteome, upstreamOffset, downstreamOffset){
     if(missing(mart) && missing(proteome)){

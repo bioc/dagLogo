@@ -1,4 +1,19 @@
-##require pheatmap
+#' @title plot heatmap for test results
+#' @description plot heatmap for test results
+#' @param testDAUresults output of \code{\link{testDAU}}, should be an object of testDAUresults
+#' @param type "diff" or "zscore"
+#' @param \dots parameter could be passed to pheatmap
+#' @return none
+#' @import pheatmap
+#' @export
+#' @author Jianhong Ou
+#' @examples
+#'   data("seq.example")
+#'   data("proteome.example")
+#'   bg <- buildBackgroundModel(seq.example, proteome=proteome.example, permutationSize=10)
+#'   t <- testDAU(seq.example, bg)
+#'   dagHeatmap(t)
+#' @keywords figure
 dagHeatmap <- function(testDAUresults, type=c("diff", "zscore"), ...){
     if(missing(testDAUresults) || class(testDAUresults)!="testDAUresults"){
         stop("testDAUresults should be an object of testDAUresults\n
@@ -15,6 +30,17 @@ dagHeatmap <- function(testDAUresults, type=c("diff", "zscore"), ...){
              cluster_rows=FALSE, cluster_cols=FALSE,
              scale="column")
 }
+
+
+#' @title retrieve color setting for logo
+#' @description retrieve prepared color setting for logo
+#' @param colorScheme could be 'null', 'charge', 'chemistry', 'classic' or 'hydrophobicity'
+#' @return A character vector of color scheme
+#' @export
+#' @author Jianhong Ou
+#' @examples
+#' col <- colorsets("hydrophobicity")
+#' @keywords figure
 
 colorsets <- function(colorScheme=c("null", "classic", "charge", "chemistry", "hydrophobicity")){
     colorScheme <- match.arg(colorScheme)
@@ -46,6 +72,17 @@ colorsets <- function(colorScheme=c("null", "classic", "charge", "chemistry", "h
            auto)
 }
 
+
+#' @title convert group name to a single character
+#' @description convert group name to a single character to shown in a logo
+#' @param nameScheme could be "classic", "charge", "chemistry", "hydrophobicity"
+#' @return A character vector of name scheme
+#' @export
+#' @author Jianhong Ou
+#' @examples
+#' nameHash("charge")
+#' @keywords figure
+
 nameHash <- function(nameScheme=c("classic", "charge", "chemistry", "hydrophobicity")){
     nameScheme <- match.arg(nameScheme)
     classic <- c("nonpolar_aliphatic"="M",
@@ -69,6 +106,35 @@ nameHash <- function(nameScheme=c("classic", "charge", "chemistry", "hydrophobic
            hydrophobicity=hydrophobicity)
 }
 
+#' @title plot sequence logo for test results
+#' @description plot sequence logo for test results
+#' @param testDAUresults output of \code{\link{testDAU}}, should be an object of testDAUresults
+#' @param type "diff" or "zscore"
+#' @param pvalueCutoff pvalue cutoff for logo plot
+#' @param namehash the hash table to convert rownames of test results to a single letter 
+#' to be plotted in the logo
+#' @param font font for logo symbol
+#' @param textgp text parameter
+#' @param legend plot legend or not, default false.
+#' @param labelRelativeToAnchor plot label relative to anchor or not, default false.
+#' @param labels the labels in each position.
+#' @return none
+#' @importFrom grDevices dev.size
+#' @importFrom graphics plot.new
+#' @importFrom grImport PostScriptTrace readPicture picture
+#' @import grid
+#' @import motifStack
+#' @import methods
+#' @export
+#' @author Jianhong Ou
+#' @seealso \code{\link{nameHash}}
+#' @examples
+#'  data("seq.example")
+#'  data("proteome.example")
+#'  bg <- buildBackgroundModel(seq.example, proteome=proteome.example, permutationSize=10)
+#'  t <- testDAU(seq.example, bg)
+#'  dagLogo(t)
+#' @keywords figure
 dagLogo <- function(testDAUresults, type=c("diff", "zscore"), 
                     pvalueCutoff=0.05,
                     namehash=NULL,
