@@ -2,39 +2,49 @@
 % Please edit documentation in R/buildBackgroundModel.R
 \name{buildBackgroundModel}
 \alias{buildBackgroundModel}
-\title{build background model}
+\title{Build background models for DAU tests}
 \usage{
-buildBackgroundModel(dagPeptides, bg = c("wholeGenome", "inputSet",
-  "nonInputSet"), model = c("any", "anchored"),
+buildBackgroundModel(dagPeptides, background = c("wholeProteome",
+  "inputSet", "nonInputSet"), model = c("any", "anchored"),
   targetPosition = c("any", "Nterminus", "Cterminus"),
-  uniqueSeq = TRUE, permutationSize = 30L, rand.seed = 1,
-  replacement = FALSE, proteome)
+  uniqueSeq = TRUE, numSubsamples = 300L, rand.seed = 1,
+  replacement = FALSE, testType = c("ztest", "fisher"), proteome)
 }
 \arguments{
-\item{dagPeptides}{an object of dagPeptides, output of \code{\link{fetchSequence}} or 
-\code{\link{formatSequence}}}
+\item{dagPeptides}{An object of \code{\link{dagPeptides-class}} Class containing 
+peptide sequences as the input set.}
 
-\item{bg}{could be "wholeGenome", "inputSet" or "nonInputSet"}
+\item{background}{A character vector with defaults: "wholeProteome" and "inputSet", 
+"nonInputSet", indicating what set of peptide sequences should be considered to 
+generate a background model.}
 
-\item{model}{could be "any" or "anchored"}
+\item{model}{A character vector with defaults: "any" and "anchored", indicating 
+whether an anchoring position should be applied to generate a background model.}
 
-\item{targetPosition}{could be "any", "Nterminus" or "Cterminus"}
+\item{targetPosition}{A character vector with defaults: "any", "Nterminus" and 
+"Cterminus", indicating whether which part of protein sequences of choice should
+be used to generate a background model.}
 
-\item{uniqueSeq}{should the background sequence be unique?}
+\item{uniqueSeq}{A logical vector indicating whether only unique peptide sequences
+are included in a background model for sampling.}
 
-\item{permutationSize}{how many times should it samples}
+\item{numSubsamples}{An integer, the number of random sampling.}
 
-\item{rand.seed}{random seed}
+\item{rand.seed}{An integer, the seed used to perform random sampling}
 
-\item{replacement}{Should sampling be with replacement?}
+\item{replacement}{A logical vector of length 1, indicating whether replacement 
+is allowed for random sampling.}
+
+\item{testType}{A character vector of length 1. Available options are "ztest" 
+and "fisher".}
 
 \item{proteome}{an object of Proteome, output of \code{\link{prepareProteome}}}
 }
 \value{
-an object of dagBackground which contains background and permutationSize.
+An object of \code{\link{dagBackground-class}} Class.
 }
 \description{
-build background model for dag test
+A method used to build background models for testing differential amino acid usage
 }
 \details{
 The background could be generated from wholeGenome, inputSet or nonInputSet.
@@ -52,14 +62,23 @@ whole genome: randomly select subsequences from the whole genome with each subse
  anchored non-input set: whole genome - input set and the middle amino acids must contain anchor amino acid.
 }
 \examples{
-  data("seq.example")
-  data("proteome.example")
-  bg <- buildBackgroundModel(seq.example, proteome=proteome.example)
-}
-\seealso{
-\code{\link{prepareProteome}}
+dat <- unlist(read.delim(system.file(
+                                   "extdata", "grB.txt", package = "dagLogo"),
+                         header = FALSE, as.is = TRUE))
+##prepare an object of Proteome Class from a fasta file
+proteome <- prepareProteome(fasta = system.file("extdata",
+                                                "HUMAN.fasta",
+                                                package = "dagLogo"), 
+                            species = "Homo sapiens")
+                            
+##prepare an object of dagPeptides Class
+seq <- formatSequence(seq = dat, proteome = proteome, upstreamOffset = 14,
+                     downstreamOffset = 15)
+bg_fisher <- buildBackgroundModel(seq, background = "wholeProteome", 
+                                  proteome = proteome, testType = "fisher")
+bg_ztest <- buildBackgroundModel(seq, background = "wholeProteome",
+                                   proteome = proteome, testType = "ztest")
 }
 \author{
-Jianhong Ou, Alexey Stukalov, Julie Zhu
+Jianhong Ou, Haibo Liu
 }
-\keyword{misc}

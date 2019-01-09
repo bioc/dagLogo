@@ -3,43 +3,41 @@
 \docType{class}
 \name{testDAUresults-class}
 \alias{testDAUresults-class}
-\title{Class \code{"testDAUresults"}}
+\alias{testDAUresults}
+\title{Class \code{testDAUresults}.}
 \description{
-An object of class \code{"testDAUresults"} represents background model.
+An S4 class to represent a DAU statistical test result from dagLogo analysis.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{group}}{Object of class \code{"character"} could be "null", "classic", 
-"charge", "chemistry", "hydrophobicity"}
+\item{\code{group}}{A character vector of length 1, the type of method for grouping 
+amino acid.}
 
-\item{\code{difference}}{code{"matrix"} the difference of inputs from background for 
-each amino acid in each position}
+\item{\code{testType}}{A character vector of length 1, the type of statistic testing.
+The available options are "fisher" and "z-test".}
 
-\item{\code{zscore}}{code{"matrix"} z score for each amino acid in each position}
+\item{\code{difference}}{A numeric matrix consisting of differences of amino acid. 
+proportions between the test set and the background set of aligned, formatted 
+peptides at each position.}
 
-\item{\code{pvalue}}{code{"matrix"} pvalue for each amino acid in each position}
+\item{\code{statistics}}{A numeric matrix consisting of Z-scores or odds ratios for
+Z-test and Fisher's exact test, respectively.}
 
-\item{\code{background}}{code{"matrix"} background frequencies for each amino acid in each position}
+\item{\code{pvalue}}{A numeric matrix consisting of p-values.}
 
-\item{\code{motif}}{code{"matrix"} inputs frequencies for each amino acid in each position}
+\item{\code{background}}{A numeric matrix consisting amino acid proportions in the 
+background set of aligned, formatted peptides at each position.}
 
-\item{\code{upstream}}{\code{"numeric"} The upstream offset from anchor}
+\item{\code{motif}}{A numeric matrix consisting of proportions for dagLogo.}
 
-\item{\code{downstream}}{\code{"numeric"} The downstream offset from anchor}
+\item{\code{upstreamOffset}}{A positive integer, the upstream offset
+relative to the anchoring position.}
+
+\item{\code{downstreamOffset}}{A positive integer, the upstream offset
+relative to the anchoring position.}
 }}
 
-\section{Objects from the Class}{
-
-  Objects can be created by calls of the form 
- \code{new("dagBackground", group="character",
-           difference="matrix",
-           zscore="matrix",
-           pvalue="matrix",
-           background="matrix",
-           motif="matrix",
-           upstream="numeric",
-           downstream="numeric")}.
+\author{
+Jianhong Ou, Haibo Liu
 }
-
-\keyword{classes}

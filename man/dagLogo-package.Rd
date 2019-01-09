@@ -7,20 +7,13 @@
 \title{Visualize significant conserved amino acid sequence pattern in groups
 based on probability theory}
 \description{
-We implement iceLogo by R to visualize significant conserved amino acid sequence pattern
- based on probability theory. Compare to iceLogo, dagLogo can also visualize significant 
- sequence patterns by clustering the peptides by groups such as charge, chemistry, hydrophobicity
- and etc.
+dagLogo provides differential analysis of grouped/ungrouped amino acid usage
+between an input set of aligned peptide sequences and a background set of 
+aligned peptide sequences which can be generated in different ways. Results 
+of Fisher's exact test and/or Z-test are visualized using a heatmap or DAG Logo.
 }
 \details{
-\tabular{ll}{
-    Package: \tab dagLogo\cr
-    Type: \tab Package\cr
-    Version: \tab 1.0\cr
-    Date: \tab 2013-09-31\cr
-    License: \tab GPL (>= 2)\cr
- }
-  DAG: Differential Amino acid Group
+DAG: Differential Amino acid Group
   
   There are several differences between dagLogo from iceLogo:
   
@@ -35,12 +28,13 @@ We implement iceLogo by R to visualize significant conserved amino acid sequence
 \examples{
   data("seq.example")
   data("proteome.example")
-  bg <- buildBackgroundModel(seq.example, proteome=proteome.example, permutationSize=10L)
+  bg <- buildBackgroundModel(seq.example, proteome=proteome.example, numSubsamples=10L)
   t <- testDAU(seq.example, bg)
   dagLogo(t)
 }
 \author{
-Jianhong Ou, Julie Lihua Zhu
-Maintainer: Jianhong Ou <jianhong.ou@umassmed.edu>
+Jianhong Ou, Haibo Liu, Julie Lihua Zhu
+
+Maintainer: Jianhong Ou <jianhong.ou@duke.edu>
 }
 \keyword{internal}

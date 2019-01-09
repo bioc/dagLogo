@@ -1,15 +1,16 @@
 Package: dagLogo
 Type: Package
 Title: dagLogo
-Version: 1.21.1
-Author: Jianhong Ou, Alexey Stukalov, Niraj Nirala, Usha Acharya, Lihua Julie Zhu
+Version: 1.21.2
+Author: Jianhong Ou, Haibo Liu, Alexey Stukalov, Niraj Nirala, Usha Acharya, Lihua Julie Zhu
 Maintainer: Jianhong Ou <jianhong.ou@umassmed.edu>
 Description: Visualize significant conserved amino acid sequence pattern in groups based on probability theory.
 License: GPL (>=2)
 Depends: R (>= 3.0.1), methods, biomaRt, grImport, grid, motifStack
-Imports: pheatmap, Biostrings
+Imports: pheatmap, Biostrings, UniProt.ws, BiocGenerics
 Suggests: XML, BiocStyle, knitr, rmarkdown,
-    testthat, UniProt.ws
+    testthat
 biocViews: SequenceMatching, Visualization
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
+Encoding: UTF-8

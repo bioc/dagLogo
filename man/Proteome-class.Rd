@@ -3,26 +3,30 @@
 \docType{class}
 \name{Proteome-class}
 \alias{Proteome-class}
-\title{Class \code{"Proteome"}}
+\alias{Proteome}
+\title{Class \code{\link{Proteome}}.}
 \description{
-An object of class \code{"Proteome"} represents proteome of a given species.
+An S4 class to represent a whole proteome for dagLogo analysis.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{proteome}}{Object of class \code{"data.frame"} the proteome of a given species, 
-should include ids and peptide sequences.}
+\item{\code{proteome}}{A data frame.}
 
-\item{\code{type}}{\code{"character"} indicates how the object is prepared, 
-could be "fasta" or "UniProt"}
+\item{\code{type}}{A character vector of length 1. Available options :"UniProt", and 
+"fasta".}
 
-\item{\code{species}}{\code{"character"} the species}
+\item{\code{species}}{A character vector of length 1, a conventional Latin name for 
+a species.}
 }}
 
 \section{Objects from the Class}{
 
  Objects can be created by calls of the form 
+ 
  \code{new("Proteome", proteome, type, species)}.
 }
 
-\keyword{classes}
+\author{
+Jianhong Ou
+}

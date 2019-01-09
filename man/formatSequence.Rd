@@ -2,41 +2,46 @@
 % Please edit documentation in R/formatSequence.R
 \name{formatSequence}
 \alias{formatSequence}
-\title{prepare an object of dagPeptides from sequences}
+\title{Format already aligned peptide sequences.}
 \usage{
 formatSequence(seq, proteome, upstreamOffset, downstreamOffset)
 }
 \arguments{
-\item{seq}{a vector of character, amino acid sequences}
+\item{seq}{A vector of aligned peptide sequences of the same length}
 
-\item{proteome}{an object of Proteome, output of \code{\link{prepareProteome}}}
+\item{proteome}{An object of \code{\link{Proteome-class}} Class.}
 
-\item{upstreamOffset}{an integer, upstream offset position}
+\item{upstreamOffset}{An integer, the upstream offset relative to
+the anchoring position.}
 
-\item{downstreamOffset}{an integer, downstream offset position}
+\item{downstreamOffset}{An integer, the downstream offset relative
+to the anchoring position.}
 }
 \value{
-an object of dagPeptides, which is a list contains:
-data, peptides, upstreamOffset, downstreamOffset and type information
+An object of \code{\link{dagPeptides-class}} Class
 }
 \description{
-prepare an object of dagPeptides from sequences
+Convert already aligned peptide sequences into an object of 
+\code{\link{dagPeptides-class}} Class.
 }
 \examples{
-if(interactive()){
-   dat <- unlist(read.delim(system.file("extdata", 
-                                        "grB.txt", package="dagLogo"), 
-                            header=F, as.is=TRUE))
-   proteome <- prepareProteome(fasta=system.file("extdata", 
-                                                 "HUMAN.fasta",
-                                                 package="dagLogo"))
-   seq <- formatSequence(dat, proteome)
- }
-}
-\seealso{
-\code{\link{fetchSequence}}
+## You already have the aligned peptides sequences in hand. Then you can use 
+## the formatSequence function to prepare an object of dagPeptides. Befor doing 
+## that, you need prepare a Proteome object by the prepareProteome function.
+
+dat <- unlist(read.delim(system.file(
+                                   "extdata", "grB.txt", package = "dagLogo"),
+                         header = FALSE, as.is = TRUE))
+##prepare an object of Proteome Class from a fasta file
+proteome <- prepareProteome(fasta = system.file("extdata",
+                                                "HUMAN.fasta",
+                                                package = "dagLogo"), 
+                            species = "Homo sapiens")
+##prepare an object of dagPeptides
+seq <- formatSequence(seq = dat, proteome = proteome, upstreamOffset = 14,
+                     downstreamOffset = 15)
+
 }
 \author{
-Jianhong Ou, Julie Zhu
+Jianhong Ou, Haibo Liu
 }
-\keyword{misc}

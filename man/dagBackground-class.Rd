@@ -3,22 +3,23 @@
 \docType{class}
 \name{dagBackground-class}
 \alias{dagBackground-class}
-\title{Class \code{"dagBackground"}}
+\alias{dagBackground}
+\title{Class \code{dagBackground}.}
 \description{
-An object of class \code{"dagBackground"} represents background model.
+An S4 class to represent a background of a formatted, aligned peptides for 
+dagLogo analysis.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{background}}{Object of class \code{"list"} records the background model}
+\item{\code{background}}{A list of data frame. Within each n-by-1 dataframe is a the 
+aligned peptides of same length.}
 
-\item{\code{permutationSize}}{code{"integer"} permutation size of background}
+\item{\code{numSubsamples}}{An integer. That is the length of the \code{background} list}
+
+\item{\code{testType}}{An character. Test type.}
 }}
 
-\section{Objects from the Class}{
-
-  Objects can be created by calls of the form 
-  \code{new("dagBackground", background, permutationSize)}.
+\author{
+Jianhong Ou, Haibo Liu
 }
-
-\keyword{classes}

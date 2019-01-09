@@ -2,24 +2,41 @@
 % Please edit documentation in R/dagLogo.R
 \name{colorsets}
 \alias{colorsets}
-\title{retrieve color setting for logo}
+\title{Color sets for visualization.}
 \usage{
-colorsets(colorScheme = c("null", "classic", "charge", "chemistry",
-  "hydrophobicity"))
+colorsets(colorScheme = ls(envir = cachedEnv))
 }
 \arguments{
-\item{colorScheme}{could be 'null', 'charge', 'chemistry', 'classic' or 'hydrophobicity'}
+\item{colorScheme}{A character vector of length 1, determining the color scheme
+based on amino acid classification methods. The available \code{colorScheme} 
+are ""no","bulkiness_Zimmerman","hydrophobicity_KD", "hydrophobicity_HW", 
+"isoelectric_point_Zimmerman", "contact_potential_Maiorov",
+"chemistry_property_Mahler", "consensus_similarity_SF", 
+"volume_Bigelow", "structure_alignments_Mirny", "polarity_Grantham", 
+"sequence_alignment_Dayhoff", "bulkiness_Zimmerman_group", "hydrophobicity_KD_group",
+"hydrophobicity_HW_group", "charge_group", "contact_potential_Maiorov_group",
+"chemistry_property_Mahler_group", "consensus_similarity_SF_group", 
+"volume_Bigelow_group", "structure_alignments_Mirny_group", "polarity_Grantham_group",  
+"sequence_alignment_Dayhoff_group", "custom" and "custom_group". If "custom" or
+"custom_group" are used, users must define a grouping scheme using a list 
+containing sublist named as "color", and "symbol" using the function
+addScheme, with group set as "NULL" or a list with same names as those of \code{color} 
+and \code{symbol}. No grouping was applied for the first 12 schemes. It is used to 
+color AAs based on similarities or group amino acids into groups of similarities..}
 }
 \value{
-A character vector of color scheme
+A named character vector of colors
 }
 \description{
-retrieve prepared color setting for logo
+Create color encoding for visualization of a peptide sequence logo.
 }
 \examples{
-col <- colorsets("hydrophobicity")
+colorsets("polarity_Grantham_group")
+}
+\seealso{
+{\code{\link{addScheme}}}
 }
 \author{
-Jianhong Ou
+Jianhong Ou, Haibo Liu
 }
-\keyword{figure}
+\keyword{internal}

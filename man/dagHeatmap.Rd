@@ -2,31 +2,37 @@
 % Please edit documentation in R/dagLogo.R
 \name{dagHeatmap}
 \alias{dagHeatmap}
-\title{plot heatmap for test results}
+\title{Visualize daglogo using a heatmap.}
 \usage{
-dagHeatmap(testDAUresults, type = c("diff", "zscore"), ...)
+dagHeatmap(testDAUresults, type = c("diff", "statistics"), ...)
 }
 \arguments{
-\item{testDAUresults}{output of \code{\link{testDAU}}, should be an object of testDAUresults}
+\item{testDAUresults}{An object of \code{\link{testDAUresults-class}} (results of 
+testing differential amino acid usage).}
 
-\item{type}{"diff" or "zscore"}
+\item{type}{A character vector of length 1, the type of metrics to display 
+on y-axis. The available options are "diff" and "statistics", which are 
+differences in amino acid usage at each position between the inputSet and 
+the backgroundSet, and the Z-scores or odds ratios when Z-test or Fisher's 
+exact test is performed to test the differential usage of amino acid at each 
+position between the two sets.}
 
-\item{\dots}{parameter could be passed to pheatmap}
+\item{...}{other parameters passed to the\code{\link[pheatmap]{pheatmap}} function.}
 }
 \value{
-none
+The output from the \code{\link[pheatmap]{pheatmap}} function.
 }
 \description{
-plot heatmap for test results
+Using a heatmap to visualize results of testing differential amino acid usage.
 }
 \examples{
-  data("seq.example")
-  data("proteome.example")
-  bg <- buildBackgroundModel(seq.example, proteome=proteome.example, permutationSize=10)
-  t <- testDAU(seq.example, bg)
-  dagHeatmap(t)
+data("seq.example")
+data("proteome.example")
+bg <- buildBackgroundModel(seq.example, proteome=proteome.example, 
+                           numSubsamples=10)
+t0 <- testDAU(seq.example, bg)
+dagHeatmap(testDAUresults = t0, type = "diff")
 }
 \author{
-Jianhong Ou
+Jianhong Ou, Haibo Liu
 }
-\keyword{figure}

@@ -2,50 +2,70 @@
 % Please edit documentation in R/dagLogo.R
 \name{dagLogo}
 \alias{dagLogo}
-\title{plot sequence logo for test results}
+\title{Create sequence logos.}
 \usage{
 dagLogo(testDAUresults, type = c("diff", "zscore"),
-  pvalueCutoff = 0.05, namehash = NULL, font = "Helvetica-Bold",
-  textgp = gpar(), legend = FALSE, labelRelativeToAnchor = FALSE,
+  pvalueCutoff = 0.05,
+  groupingSymbol = getGroupingSymbol(testDAUresults@group),
+  font = "Helvetica-Bold", fontface = "bold", fontsize = 5,
+  title = NULL, legend = FALSE, labelRelativeToAnchor = FALSE,
   labels = NULL)
 }
 \arguments{
-\item{testDAUresults}{output of \code{\link{testDAU}}, should be an object of testDAUresults}
+\item{testDAUresults}{An object of \code{\link{testDAUresults-class}} (results of
+testing differential amino acid usage).}
 
-\item{type}{"diff" or "zscore"}
+\item{type}{A character vector of length 1. Type of statistics to display 
+on y-axis, available choices are "diff" or "zscore".}
 
-\item{pvalueCutoff}{pvalue cutoff for logo plot}
+\item{pvalueCutoff}{A numeric vector of length 1. A cutoff of p-values.}
 
-\item{namehash}{the hash table to convert rownames of test results to a single letter 
-to be plotted in the logo}
+\item{groupingSymbol}{A named character vector.}
 
-\item{font}{font for logo symbol}
+\item{font}{A character vector of length 1. Font type for displaying sequence
+Logo.}
 
-\item{textgp}{text parameter}
+\item{fontface}{An integer, fontface of text for axis annotation and legends.}
 
-\item{legend}{plot legend or not, default false.}
+\item{fontsize}{An integer, fontsize of text for axis annotation and legends.}
 
-\item{labelRelativeToAnchor}{plot label relative to anchor or not, default false.}
+\item{title}{A character vector of length 1, main title for a plot.}
 
-\item{labels}{the labels in each position.}
+\item{legend}{A logical vector of length 1, indicating whether to show the 
+legend.}
+
+\item{labelRelativeToAnchor}{A logical vector of length 1, indicating whether
+x-axis label should be adjusted relative to the anchoring position.}
+
+\item{labels}{A character vector, x-axis labels.}
 }
 \value{
-none
+A sequence Logo is plotted without returned values.
 }
 \description{
-plot sequence logo for test results
+Create sequence logos for visualizing results of testing differential usage 
+of amino acids.
 }
 \examples{
- data("seq.example")
- data("proteome.example")
- bg <- buildBackgroundModel(seq.example, proteome=proteome.example, permutationSize=10)
- t <- testDAU(seq.example, bg)
- dagLogo(t)
-}
-\seealso{
-\code{\link{nameHash}}
+data('seq.example') 
+data('proteome.example')
+bg <- buildBackgroundModel(seq.example, proteome=proteome.example, 
+                           numSubsamples=10, testType = "ztest")
+t0 <- testDAU(seq.example, bg)
+t1 <- testDAU(dagPeptides = seq.example, dagBackground = bg, 
+              groupingScheme = "hydrophobicity_KD")
+t2 <- testDAU(dagPeptides = seq.example, dagBackground = bg, 
+             groupingScheme = "charge_group")
+t3 <- testDAU(dagPeptides = seq.example, dagBackground = bg, 
+             groupingScheme = "chemistry_property_Mahler")
+t4 <- testDAU(dagPeptides = seq.example, dagBackground = bg, 
+              groupingScheme = "hydrophobicity_KD_group")
+dagLogo(t0)
+dagLogo(t1, groupingSymbol = getGroupingSymbol(t1@group))
+dagLogo(t2, groupingSymbol = getGroupingSymbol(t2@group))
+dagLogo(t3, groupingSymbol = getGroupingSymbol(t3@group))
+dagLogo(t4, groupingSymbol = getGroupingSymbol(t4@group))
 }
 \author{
-Jianhong Ou
+Jianhong Ou, Haibo Liu
 }
-\keyword{figure}

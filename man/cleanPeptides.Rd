@@ -10,7 +10,7 @@ cleanPeptides(dat, anchors)
 \item{dat}{input data. The input dat contains two columns symbol and peptides.
 the anchor AA must be in lower case.}
 
-\item{anchors}{a vector of character, anchor Amino Acid.}
+\item{anchors}{a vector of character, anchor Amino Acid, must be lower case.}
 }
 \value{
 an data.frame with columns: `symbol`, `peptides` and `anchor`

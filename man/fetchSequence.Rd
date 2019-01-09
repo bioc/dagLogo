@@ -2,70 +2,120 @@
 % Please edit documentation in R/fetchSequence.R
 \name{fetchSequence}
 \alias{fetchSequence}
-\title{fetch sequence by id}
+\title{Fetch protein/peptide sequences and create a \code{\link{dagPeptides-class}} object.}
 \usage{
 fetchSequence(IDs, type = "entrezgene", anchorAA = NULL, anchorPos,
   mart, proteome, upstreamOffset, downstreamOffset)
 }
 \arguments{
-\item{IDs}{A vector of Identifiers to retrieve peptides}
+\item{IDs}{A character vector containing protein/peptide IDs used to fetch 
+sequences from a Biomart database or a \code{\link{Proteome-class}} object.}
 
-\item{type}{type of identifiers}
+\item{type}{A character vector of length 1. The available options are 
+"entrezgene" and "uniprotswissprot" if parameter \code{mart} is missing;
+otherwise it can be any type of IDs available in Biomart databases.}
 
-\item{anchorAA}{a vector of character, anchor Amino Acid}
+\item{anchorAA}{A character vector of length 1 or the same length as that of
+anchorPos, each element of which is a single letter symbol of amino acids, 
+for example, "K" for lysine.}
 
-\item{anchorPos}{a vector of character or numeric, anchor position, for example, K121. 
-Or a vector of character with amino acid sequences. 
-If AA sequences is used, the anchorAA must be the a vector of character with single AA for each.}
+\item{anchorPos}{A character or numeric vector. Each element of which is (1) a 
+single-letter symbol of amino acid followed by the position of the anchoring 
+amino acid in the target peptide/protein sequence, for example, "K123" for lysine 
+at position 123 or the position of the anchoring amino acid in the target 
+peptide/protein sequence, for example, "123" for an amino acid at position 123; 
+or (2) a vector of subsequences containing the anchoring AAs.}
 
-\item{mart}{an object of Mart}
+\item{mart}{A Biomart database name you want to connect to. One of parameters 
+\code{mart} and \code{proteome} should be provided.}
 
-\item{proteome}{an object of Proteome, output of \code{\link{prepareProteome}}}
+\item{proteome}{An object of \code{\link{Proteome-class}} class. One of parameters 
+\code{mart} and \code{\link{Proteome-class}} should be provided.}
 
-\item{upstreamOffset}{an integer, upstream offset position}
+\item{upstreamOffset}{An integer, the upstream offset relative to
+the anchoring position.}
 
-\item{downstreamOffset}{an integer, downstream offset position}
+\item{downstreamOffset}{An integer, the downstream offset relative
+to the anchoring position.}
 }
 \value{
-an object of \code{\linkS4class{dagPeptides}}
+An object of class \code{\link{dagPeptides-class}}
 }
 \description{
-fetch amino acid sequence by given identifiers via biomaRt or proteome prepared by \code{\link{prepareProteome}}
+This function fetches protein/peptide sequences from a Biomart database or 
+from a \code{\link{Proteome-class}} object based on protein/peptide IDs and create 
+a \code{\link{dagPeptides-class}} object following restriction as specified by 
+parameters: anchorAA or anchorPos, upstreamOffset and downstreamOffset.
 }
 \examples{
-if(interactive()){
-  mart <- useMart("ensembl", "dmelanogaster_gene_ensembl")
-  dat <- read.csv(system.file("extdata", "dagLogoTestData.csv", package="dagLogo"))
-  seq <- fetchSequence(as.character(dat$entrez_geneid[1:5]), 
-                       anchorPos=as.character(dat$NCBI_site[1:5]), 
-                       mart=mart, 
-                       upstreamOffset=7, 
-                       downstreamOffset=7)
-  ## sample: use sequence as anchorPos
-  sequences <- seq@peptides
-  sequences[, 8] <- "k"
-  sequences <- apply(sequences, 1, paste, collapse="")
-  seq <- fetchSequence(as.character(seq@data$IDs),
-                       anchorAA="k",
-                       anchorPos=sequences,
-                       mart=mart,
-                       upstreamOffset=7,
-                       downstreamOffset=7)
-  ## sample: use sequence as anchorPos 2
-  sequences <- cbind(seq@peptides[, 1:8], "*", seq@peptides[, 9:15])
-  sequences <- apply(sequences, 1, paste, collapse="")
-  seq <- fetchSequence(as.character(seq@data$IDs),
-                       anchorAA="*",
-                       anchorPos=sequences,
-                       mart=mart,
-                       upstreamOffset=7,
-                       downstreamOffset=7)
+## Case 1: You have both positions of the anchoring AAs and the identifiers 
+## of their enclosing peptide/protein sequences for fetching sequences using 
+## the fetchSequence function via the Biomart.
+
+if (interactive())
+{
+    try({
+    mart <- useMart("ensembl")
+    fly_mart <-
+       useDataset(mart = mart, dataset = "dmelanogaster_gene_ensembl")
+    dat <- read.csv(system.file("extdata", "dagLogoTestData.csv",
+                           package = "dagLogo"))
+    seq <- fetchSequence(
+       IDs = as.character(dat$entrez_geneid),
+       anchorPos = as.character(dat$NCBI_site),
+       mart = fly_mart,
+       upstreamOffset = 7,
+       downstreamOffset = 7)
+   head(seq@peptides)
+   })
 }
+
+
+## Case 2: You don't have the exactly postion infor, but You have the 
+## interesting peptide subsequences and the identifiers of their enclosing 
+## peptide/protein sequences for fetching sequences using the fetchSequence
+## function via the Biomart. In the following examples, the anchoring AAs 
+## are marked by asterisks. 
+if (interactive())
+{
+    try({
+        mart <- useMart("ensembl")
+        fly_mart <-
+            useDataset(mart = mart, dataset = "dmelanogaster_gene_ensembl")
+        dat <- read.csv(system.file("extdata", "dagLogoTestData.csv",
+                                    package = "dagLogo"))
+        seq <- fetchSequence(
+            IDs = as.character(dat$entrez_geneid),
+            anchorAA = "*",
+            anchorPos = as.character(dat$peptide),
+            mart = fly_mart,
+            upstreamOffset = 7,
+            downstreamOffset = 7
+        )
+        head(seq@peptides)
+    })
 }
-\seealso{
-\code{\link{formatSequence}}
+
+## In following example, the anchoring AAs are lower case "s" for amino acid 
+## serine.
+if(interactive())
+{
+   try({
+       dat <- read.csv(system.file("extdata", "peptides4dagLogo.csv",
+                                   package = "dagLogo"))
+        mart <- useMart("ensembl")
+        human_mart <-
+            useDataset(mart = mart, dataset = "hsapiens_gene_ensembl")
+        seq <- fetchSequence(IDs = toupper(as.character(dat$symbol)),
+                             type = "hgnc_symbol",
+                             anchorAA = "s",
+                             anchorPos = as.character(dat$peptides),
+                             mart = human_mart,
+                             upstreamOffset = 7,
+                             downstreamOffset = 7)
+        head(seq@peptides)
+    })
 }
-\author{
-Jianhong Ou, Alexey Stukalov, Julie Zhu
+
+
 }
-\keyword{misc}
