@@ -7,7 +7,7 @@
 buildBackgroundModel(dagPeptides, background = c("wholeProteome",
   "inputSet", "nonInputSet"), model = c("any", "anchored"),
   targetPosition = c("any", "Nterminus", "Cterminus"),
-  uniqueSeq = TRUE, numSubsamples = 300L, rand.seed = 1,
+  uniqueSeq = FALSE, numSubsamples = 300L, rand.seed = 1,
   replacement = FALSE, testType = c("ztest", "fisher"), proteome)
 }
 \arguments{

@@ -273,7 +273,7 @@ testDAU <- function(dagPeptides,
         diff_percent <- exp_percent - mu_percent
         diff_percent[is.na(diff_percent)] <- 0
         n <-  dagBackground@numSubsamples
-        std_percent <- mu_percent*(1-mu_percent)/n
+        std_percent <- sqrt(mu_percent*(1-mu_percent)/n)
         statistics <- diff_percent / std_percent
         pvalue <- 2 * pnorm(-abs(statistics))
     } else 
