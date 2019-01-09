@@ -296,7 +296,7 @@ dagLogo(t0)
 
 Residuals at positions 10, 14, 16, 21 and 25 are partially or completely buried in the 3-D structure of CAPs are preferentially hydrophobic. Thee amino acids of the CAP DNA-binding motifs are grouped on the basis of their chemical properties and visualized using dagLogo as follows. This plot clearly displays those preferentially hydrophobic sites.
 ```{r CAPgroup,fig.cap="Catobolite Activator Protein Motif",fig.width=8,fig.height=6}
-## The DNA-binding helix-turn-helix motif of the CAP family grouped by chemistry
+## The DNA-binding helix-turn-helix motif of the CAP family grouped by hydrophobic
 t1 <- testDAU(seq, bg, groupingScheme = "hydrophobicity_HW_group")
 dagLogo(t1, groupingSymbol = getGroupingSymbol(t1@group), legend = TRUE)
 ```
