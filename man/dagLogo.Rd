@@ -9,7 +9,7 @@ dagLogo(testDAUresults, type = c("diff", "zscore"),
   groupingSymbol = getGroupingSymbol(testDAUresults@group),
   font = "Helvetica-Bold", fontface = "bold", fontsize = 5,
   title = NULL, legend = FALSE, labelRelativeToAnchor = FALSE,
-  labels = NULL)
+  labels = NULL, alpha = 0.5)
 }
 \arguments{
 \item{testDAUresults}{An object of \code{\link{testDAUresults-class}} (results of
@@ -38,6 +38,8 @@ legend.}
 x-axis label should be adjusted relative to the anchoring position.}
 
 \item{labels}{A character vector, x-axis labels.}
+
+\item{alpha}{Alpha channel for transparency of low affinity letters.}
 }
 \value{
 A sequence Logo is plotted without returned values.

@@ -45,15 +45,6 @@ Here we developed a R/Bioconductor package dagLogo, inspired by IceLogo, to visu
 
 Figure 1. Flowchart of performing dagLogo analyses. The two ways to prepare a Proteome object are colored in greenish and yellowish. The two alternative ways to build an object of dagPeptides are colored in blue and red.
 
-# Set up the working environment
-To visualize the result of statistical test of the differential usage of grouped amino acid, the full path to the executable of GhostScript need to be set by using the environment variable R\_GSCMD per session or by adding it to the system environment variable PATH. For a Unix, Linux or Mac operating system (OS), "gs" is used for searching the PATH variable, while For a Windows OS the environment variable "GSC" is searched for first, and then "gswin64c.exe" or "gswin32c.exe" are looked for among the system environment variables, depending on the operating system.
-
-For example on a Windows platform with gswin32c.exe installed at C:\\Program Files\\gs\\gs9.06\\bin, you can set up R\_GSCMD as follows:
-```{r setenv, eval=FALSE, echo=TRUE}
-Sys.setenv(R_GSCMD = file.path("C:", "Program Files", "gs", "gs9.06", "bin", 
-                               "gswin32c.exe"))
-```
-
 # Demonstration of dagLogo application
 
 ## Step 1: Fetching peptide sequences from the Biomart

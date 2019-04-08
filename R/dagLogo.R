@@ -262,12 +262,12 @@ getGroupingSymbol <-function(groupingScheme = ls(envir = cachedEnv))
 #' @param labels A character vector, x-axis labels.
 #' @param fontface An integer, fontface of text for axis annotation and legends.
 #' @param fontsize An integer, fontsize of text for axis annotation and legends.
-#' 
+#' @param alpha Alpha channel for transparency of low affinity letters.
 #' @importFrom grDevices dev.size
 #' @importFrom graphics plot.new
 #' @import motifStack
 #' @import grid
-#' @importFrom grImport PostScriptTrace readPicture picture 
+#' @importFrom grImport2 pictureGrob 
 #'
 #' @return A sequence Logo is plotted without returned values.
 #' @export
@@ -304,7 +304,7 @@ dagLogo <- function(testDAUresults,
                         title = NULL,
                         legend = FALSE,
                         labelRelativeToAnchor = FALSE,
-                        labels = NULL) 
+                        labels = NULL, alpha=0.5) 
 {
   if (missing(testDAUresults) || class(testDAUresults) != "testDAUresults") 
   {
@@ -359,7 +359,7 @@ dagLogo <- function(testDAUresults,
     symbols <- symbolsCache[[key]]
   } else 
   {
-    symbols <- motifStack:::coloredSymbols(ncha, font, colset[rname], rname)
+    symbols <- motifStack:::coloredSymbols(ncha, font, colset[rname], rname, alpha = alpha)
     symbolsCache[[key]] <- symbols
     
     ## save symbolsCache to the environment variable for future use
@@ -502,9 +502,10 @@ dagLogo <- function(testDAUresults,
         }
         ## plot symbols for amino acids 
         if (h > 0) {
+          symid <- ifelse(heights[id1[i]] > 0, id[i], paste0(id[i], "_", alpha))
           grid.draw(
-            grImport::pictureGrob(
-              symbols[[id[i]]],
+            grImport2::pictureGrob(
+              symbols[[symid]],
               x.pos,
               y.pos,
               dw,
