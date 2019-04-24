@@ -31,8 +31,8 @@ There is a package seqlogo[@Oliver2006] implemented in R to draw DNA sequence lo
 And another package motifStack[@Jianhong2012] was developed for drawing sequence logos for amino Acid, DNA and RNA sequences, which also has the capability for graphical representation of multiple motifs.
 
 IceLogo[@Colaert2009] is a tool developed in Java to visualize significantly conserved sequence patterns in
-an alignment of multiple peptide sequences against background sequences. Compare to 
-webLogo[@Crooks2004], which relying on information theory, IceLogo builds on probability theory. It is
+an alignment of multiple peptide sequences against background sequences. Compared to 
+webLogo[@Crooks2004], which relies on information theory, IceLogo builds on probability theory. It is
 reported that IceLogo has a more dynamic nature and is more appropriate for analysis of
 conserved sequence patterns.
 
@@ -46,6 +46,13 @@ Here we developed a R/Bioconductor package dagLogo, inspired by IceLogo, to visu
 Figure 1. Flowchart of performing dagLogo analyses. The two ways to prepare a Proteome object are colored in greenish and yellowish. The two alternative ways to build an object of dagPeptides are colored in blue and red.
 
 # Demonstration of dagLogo application
+
+## load the library
+
+```{r}
+library(dagLogo)
+```
+
 
 ## Step 1: Fetching peptide sequences from the Biomart
 ### Case 1: You have both positions of the anchoring AAs and the identifiers of their enclosing peptide/protein sequences for fetching sequences using the fetchSequence function via the Biomart.
@@ -136,7 +143,7 @@ if(interactive()){
 Similarly, peptide sequences can be fetched from an predefined Proteome object.  
   
   
-### Case 3: You already have the aligned peptides sequences in hand. Then you can use the formatSequence function to prepare an object of dagPeptides. Before doing that, you need prepare a Proteome object by the prepareProteome function.
+### Case 3: You already have the unaligned peptides sequences in hand. Then you can use the formatSequence function to prepare an object of dagPeptides. Before doing that, you need prepare a Proteome object by the prepareProteome function.
 
 ```{r formatSequence, results='hide'}
 dat <- unlist(read.delim(system.file("extdata", "grB.txt", package = "dagLogo"),

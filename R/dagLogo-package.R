@@ -14,11 +14,14 @@
 #'   
 #'   1. The sequence patterns can be grouped by charge, chemistry, hydrophobicity and etc.
 #'   
-#'   2. dagLogo accepts different length of aligned amino acid sequences.
+#'   2. dagLogo accepts different length of unaligned amino acid sequences.
 #'   
-#'   3. Except Random, regional (called restricted in dagLogo) and terminal 
-#'   (called anchored) background model, the background sequence could be set to 
-#'   other regions of the genes in inputs and complementary set of the proteome.
+#'   3. dagLogo not only can build random, regional (called restricted in dagLogo) and
+#'    terminal (called anchored) background model from the whole proteome, 
+#'    but also it can generate the background set using the aa sequences of 
+#'    the input protein excluding the input regions/sequences or the complementary
+#'     set of the input set.
+#'     
 #' @author Jianhong Ou, Haibo Liu, Julie Lihua Zhu
 #' 
 #' Maintainer: Jianhong Ou <jianhong.ou@duke.edu>

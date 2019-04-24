@@ -173,7 +173,7 @@ fetchSequence <-function(IDs,
         anchorPos <- gsub("^\\-+", "", anchorPos)
         anchorPos <- gsub("\\-+$", "", anchorPos)
         
-        ## non-typical anchorPos, for example, "*" in anchorPos
+        ## anchorPos eg. K135
         if (any(!grepl("^[A-Z]\\d+$", toupper(anchorPos)))) 
         {
              if (length(anchorAA) < 1 || any(grepl("[^*A-Z]", toupper(anchorPos)))) 
@@ -225,7 +225,14 @@ fetchSequence <-function(IDs,
             anchor <- anchorPos
         }
     }
-    inputs <- data.frame(IDs, anchorAA, anchorPos, anchor, oid = 1:length(anchorPos))
+    inputs <- data.frame(IDs, anchorAA, anchorPos, oid = seq_along(anchorPos))
+    if(is.list(anchor)){
+      ids <- lengths(anchor)
+      inputs <- inputs[rep(seq_along(anchorPos), ids), , drop=FALSE]
+      inputs$anchor <- unlist(anchor)
+    }else{
+      inputs$anchor <- anchor
+    }
     
     if (!missing(mart))  ## retreive sequence from biomart
     {
@@ -283,8 +290,7 @@ fetchSequence <-function(IDs,
         }, anchorPos, dat$anchor, SIMPLIFY = FALSE)
         
         ## remove peptide without queryed "anchoring peptide"
-        ## It is hard to understand these lines of code
-        dat <- dat[rep(1:nrow(dat), sapply(anchorPos, length)),]
+        dat <- dat[rep(seq.int(nrow(dat)), lengths(anchorPos)), , drop=FALSE]
         
         ## replacing query peptide with the absolute index of anchoring amino acid
         dat$anchorPos <- unlist(anchorPos)
@@ -298,7 +304,7 @@ fetchSequence <-function(IDs,
     ## check sequence of NCBIsites
     if (!is.null(anchorAA)[1])
     {
-        dat <- dat[toupper(dat$anchorAA) == dat$anchor, ]
+        dat <- dat[toupper(dat$anchorAA) == dat$anchor, , drop=FALSE]
     }
     
     ## extract sequences for logo
