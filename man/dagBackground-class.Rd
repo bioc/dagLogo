@@ -6,18 +6,20 @@
 \alias{dagBackground}
 \title{Class \code{dagBackground}.}
 \description{
-An S4 class to represent a background of a formatted, aligned peptides for 
+An S4 class to represent a background composed of a formatted, aligned peptides for 
 dagLogo analysis.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{background}}{A list of data frame. Within each n-by-1 dataframe is a the 
+\item{\code{background}}{A list of data frame, each of which represetns 
+one subset of the background set. Within each n-by-1 dataframe is a the 
 aligned peptides of same length.}
 
 \item{\code{numSubsamples}}{An integer. That is the length of the \code{background} list}
 
-\item{\code{testType}}{An character. Test type.}
+\item{\code{testType}}{An character. The type of statistic testing for dagLogo analysis of 
+differential usage of amino acids.}
 }}
 
 \author{

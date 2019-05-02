@@ -4,13 +4,14 @@
 \name{dagLogo-package}
 \alias{dagLogo-package}
 \alias{_PACKAGE}
-\title{Visualize significant conserved amino acid sequence pattern in groups
-based on probability theory}
+\title{Visualize significant conserved peptide sequence pattern in groups
+based on the probability theory}
 \description{
-dagLogo provides differential analysis of grouped/ungrouped amino acid usage
-between an input set of aligned peptide sequences and a background set of 
-aligned peptide sequences which can be generated in different ways. Results 
-of Fisher's exact test and/or Z-test are visualized using a heatmap or DAG Logo.
+dagLogo provides differential analysis of grouped/ungrouped 
+amino acid usage between an input set of aligned peptide sequences and a
+background set of aligned peptide sequences which can be generated in
+different ways. Results of Fisher's exact test and/or Z-test are visualized
+using a heatmap or DAG Logo.
 }
 \details{
 DAG: Differential Amino acid Group
@@ -21,11 +22,11 @@ DAG: Differential Amino acid Group
   
   2. dagLogo accepts different length of unaligned amino acid sequences.
   
-  3. dagLogo not only can build random, regional (called restricted in dagLogo) and
-   terminal (called anchored) background model from the whole proteome, 
-   but also it can generate the background set using the aa sequences of 
-   the input protein excluding the input regions/sequences or the complementary
-    set of the input set.
+  3. Except that random, regional (called anchored) and terminal 
+  (called restricted in dagLogo) background model built from the whole
+  proteome, the background set could be generated using subsequences from
+  regions of the protein sequences matching the input set
+  and complementary set of the input set.
 }
 \examples{
   data("seq.example")

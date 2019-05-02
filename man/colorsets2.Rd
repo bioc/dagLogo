@@ -2,13 +2,14 @@
 % Please edit documentation in R/dagLogo.R
 \name{colorsets2}
 \alias{colorsets2}
-\title{retrieve color setting for logo}
+\title{retrieve color setting for logo visualization}
 \usage{
 colorsets2(colorScheme = c("null", "classic", "charge", "chemistry",
   "hydrophobicity"))
 }
 \arguments{
-\item{colorScheme}{could be 'null', 'charge', 'chemistry', 'classic' or 'hydrophobicity'}
+\item{colorScheme}{A vector of length 1, the option could be 'null',
+'charge', 'chemistry', 'classic' or 'hydrophobicity'}
 }
 \value{
 A character vector of color scheme

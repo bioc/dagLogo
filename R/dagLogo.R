@@ -8,8 +8,8 @@
 #' the backgroundSet, and the Z-scores or odds ratios when Z-test or Fisher's 
 #' exact test is performed to test the differential usage of amino acid at each 
 #' position between the two sets.
-#' @param testDAUresults An object of \code{\link{testDAUresults-class}} Class (results
-#' of testing differential amino acid usage).
+#' @param testDAUresults An object of \code{\link{testDAUresults-class}},
+#' which contains results of testing differential amino acid usage).
 #'
 #' @return A list containing the following components:
 #' label A character vector of length 1. The type of data for visualization.
@@ -25,8 +25,7 @@ getData <- function(type, testDAUresults)
   {
     dat <- testDAUresults@difference
     label <- "DAU %"
-  } else
-  {
+  } else {
     dat <- testDAUresults@statistics
     if (testType == "fisher")
     {
@@ -45,8 +44,8 @@ getData <- function(type, testDAUresults)
 #' 
 #' Using a heatmap to visualize results of testing differential amino acid usage.
 #' 
-#' @param testDAUresults An object of \code{\link{testDAUresults-class}} (results of 
-#' testing differential amino acid usage).
+#' @param testDAUresults An object of \code{\link{testDAUresults-class}}, which contains
+#' results of testing differential amino acid usage.
 #' @param type A character vector of length 1, the type of metrics to display 
 #' on y-axis. The available options are "diff" and "statistics", which are 
 #' differences in amino acid usage at each position between the inputSet and 
@@ -86,41 +85,43 @@ dagHeatmap <-function(testDAUresults, type = c("diff", "statistics"), ...)
 
 
 
-#' @title retrieve color setting for logo
+#' @title retrieve color setting for logo visualization
 #' @description retrieve prepared color setting for logo
-#' @param colorScheme could be 'null', 'charge', 'chemistry', 'classic' or 'hydrophobicity'
+#' @param colorScheme A vector of length 1, the option could be 'null',
+#' 'charge', 'chemistry', 'classic' or 'hydrophobicity'
 #' @return A character vector of color scheme
 #' @author Jianhong Ou
 #' @keywords figure
 
-colorsets2 <- function(colorScheme=c("null", "classic", "charge", "chemistry", "hydrophobicity")){
-    colorScheme <- match.arg(colorScheme)
-    auto<-c('A'='#CCFF00', 'C'='#FFFF00', 'D'='#FF0000', 'E'='#FF0066', 
-            'F'='#00FF66', 'G'='#FF9900', 'H'='#0066FF', 'I'='#66FF00', 
-            'K'='#6600FF', 'L'='#33FF00', 'M'='#00FF00', 'N'='#CC00FF', 
-            'P'='#FFCC00', 'Q'='#FF00CC', 'R'='#0000FF', 'S'='#FF3300', 
-            'T'='#FF6600', 'V'='#99FF00', 'W'='#00CCFF', 'Y'='#00FFCC')
-    classic <- c("nonpolar_aliphatic"="#000000",
-                    "polar_uncharged"="#00811B",
-                    "aromatic"="#2000C7",
-                    "positively_charged"="#800080",
-                    "negatively_charged"="#FFB32C")
-    chemistry <- c("hydrophobic"="#000000",
-                      "polar"="#00811B",
-                      "basic"="#2000C7",
-                      "neutral"="#800080",
-                      "acidic"='#D00001')
-    hydrophobicity <- c("hydrophilic"='#000000', 
-                           "neutral"='#00811B', 
-                           "hydrophobic"='#2000C7')
-    charge<-c("positive"="#FFB32C", "neutral"="#2000C7", "negative"="#CCCCCC")
-    switch(colorScheme,
-           null=auto,
-           classic=classic,
-           charge=charge,
-           chemistry=chemistry,
-           hydrophobicity=hydrophobicity,
-           auto)
+colorsets2 <- function(colorScheme=c("null", "classic", "charge",
+                                     "chemistry", "hydrophobicity")){
+  colorScheme <- match.arg(colorScheme)
+  auto<-c('A'='#CCFF00', 'C'='#FFFF00', 'D'='#FF0000', 'E'='#FF0066', 
+          'F'='#00FF66', 'G'='#FF9900', 'H'='#0066FF', 'I'='#66FF00', 
+          'K'='#6600FF', 'L'='#33FF00', 'M'='#00FF00', 'N'='#CC00FF', 
+          'P'='#FFCC00', 'Q'='#FF00CC', 'R'='#0000FF', 'S'='#FF3300', 
+          'T'='#FF6600', 'V'='#99FF00', 'W'='#00CCFF', 'Y'='#00FFCC')
+  classic <- c("nonpolar_aliphatic"="#000000",
+               "polar_uncharged"="#00811B",
+               "aromatic"="#2000C7",
+               "positively_charged"="#800080",
+               "negatively_charged"="#FFB32C")
+  chemistry <- c("hydrophobic"="#000000",
+                 "polar"="#00811B",
+                 "basic"="#2000C7",
+                 "neutral"="#800080",
+                 "acidic"='#D00001')
+  hydrophobicity <- c("hydrophilic"='#000000', 
+                      "neutral"='#00811B', 
+                      "hydrophobic"='#2000C7')
+  charge<-c("positive"="#FFB32C", "neutral"="#2000C7", "negative"="#CCCCCC")
+  switch(colorScheme,
+         null=auto,
+         classic=classic,
+         charge=charge,
+         chemistry=chemistry,
+         hydrophobicity=hydrophobicity,
+         auto)
 }
 
 #' Color sets for visualization.
@@ -173,26 +174,26 @@ colorsets <-function(colorScheme = ls(envir = cachedEnv))
 #' @keywords figure
 
 nameHash <- function(nameScheme=c("classic", "charge", "chemistry", "hydrophobicity")){
-    nameScheme <- match.arg(nameScheme)
-    classic <- c("nonpolar_aliphatic"="M",
-                 "polar_uncharged"="U",
-                 "aromatic"="A",
-                 "positively_charged"="P",
-                 "negatively_charged"="N")
-    chemistry <- c("hydrophobic"="H",
-                   "polar"="P",
-                   "basic"="B",
-                   "neutral"="U",
-                   "acidic"='A')
-    hydrophobicity <- c("hydrophilic"='I', 
-                        "neutral"='U', 
-                        "hydrophobic"='O')
-    charge<-c("positive"="P", "neutral"="U", "negative"="N")
-    switch(nameScheme,
-           classic=classic,
-           charge=charge,
-           chemistry=chemistry,
-           hydrophobicity=hydrophobicity)
+  nameScheme <- match.arg(nameScheme)
+  classic <- c("nonpolar_aliphatic"="M",
+               "polar_uncharged"="U",
+               "aromatic"="A",
+               "positively_charged"="P",
+               "negatively_charged"="N")
+  chemistry <- c("hydrophobic"="H",
+                 "polar"="P",
+                 "basic"="B",
+                 "neutral"="U",
+                 "acidic"='A')
+  hydrophobicity <- c("hydrophilic"='I', 
+                      "neutral"='U', 
+                      "hydrophobic"='O')
+  charge<-c("positive"="P", "neutral"="U", "negative"="N")
+  switch(nameScheme,
+         classic=classic,
+         charge=charge,
+         chemistry=chemistry,
+         hydrophobicity=hydrophobicity)
 }
 
 
@@ -209,7 +210,7 @@ nameHash <- function(nameScheme=c("classic", "charge", "chemistry", "hydrophobic
 #' "chemistry_property_Mahler_group", "consensus_similarity_SF_group", 
 #' "volume_Bigelow_group", "structure_alignments_Mirny_group", "polarity_Grantham_group",  
 #' "sequence_alignment_Dayhoff_group", and "custom". If "custom" is used, users 
-#' must define a grouping scheme using a list containing sublist named as "color",
+#' must define a grouping scheme using a list containing sublists named as "color",
 #' "symbol" and "group" using the function \code{\link{addScheme}}. No grouping 
 #' was applied for the first 12 schemes. 
 #'
@@ -229,7 +230,7 @@ getGroupingSymbol <-function(groupingScheme = ls(envir = cachedEnv))
   groupingScheme <- match.arg(groupingScheme)
   if (!groupingScheme %in% ls(envir = cachedEnv))
   {
-    stop("Unknown color scheme used!")
+    stop("Unknown coloring scheme used!")
   }
   if (grepl("group", groupingScheme))
   {
@@ -241,15 +242,15 @@ getGroupingSymbol <-function(groupingScheme = ls(envir = cachedEnv))
 }
 
 
-#' Create sequence logos.
+#' Create sequence logo.
 #' 
-#' Create sequence logos for visualizing results of testing differential usage 
+#' Create sequence logo for visualizing results of testing differential usage 
 #' of amino acids.
 #'
-#' @param testDAUresults An object of \code{\link{testDAUresults-class}} (results of
-#' testing differential amino acid usage).
-#' @param type A character vector of length 1. Type of statistics to display 
-#' on y-axis, available choices are "diff" or "zscore".
+#' @param testDAUresults An object of \code{\link{testDAUresults-class}}, which
+#' cintains results of testing differential amino acid usage).
+#' @param type A character vector of length 1. Type of statistics to be displayed 
+#' on y-axis. Available choices are "diff" or "zscore".
 #' @param pvalueCutoff A numeric vector of length 1. A cutoff of p-values.
 #' @param groupingSymbol A named character vector.
 #' @param font A character vector of length 1. Font type for displaying sequence
@@ -295,16 +296,16 @@ getGroupingSymbol <-function(groupingScheme = ls(envir = cachedEnv))
 
 
 dagLogo <- function(testDAUresults,
-                        type = c("diff", "zscore"),
-                        pvalueCutoff = 0.05,
-                        groupingSymbol = getGroupingSymbol(testDAUresults@group),
-                        font = "Helvetica-Bold",
-                        fontface = "bold",
-                        fontsize = 5,
-                        title = NULL,
-                        legend = FALSE,
-                        labelRelativeToAnchor = FALSE,
-                        labels = NULL, alpha=0.5) 
+                    type = c("diff", "zscore"),
+                    pvalueCutoff = 0.05,
+                    groupingSymbol = getGroupingSymbol(testDAUresults@group),
+                    font = "Helvetica",
+                    fontface = "bold",
+                    fontsize = 5,
+                    title = NULL,
+                    legend = FALSE,
+                    labelRelativeToAnchor = FALSE,
+                    labels = NULL, alpha=1) 
 {
   if (missing(testDAUresults) || class(testDAUresults) != "testDAUresults") 
   {
@@ -359,7 +360,8 @@ dagLogo <- function(testDAUresults,
     symbols <- symbolsCache[[key]]
   } else 
   {
-    symbols <- motifStack:::coloredSymbols(ncha, font, colset[rname], rname, alpha = alpha)
+    symbols <- motifStack:::coloredSymbols(ncha, font, colset[rname], 
+                                           rname, alpha = alpha)
     symbolsCache[[key]] <- symbols
     
     ## save symbolsCache to the environment variable for future use

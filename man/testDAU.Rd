@@ -35,7 +35,7 @@ the interval of (0, 1) when not NA.}
 An object of Class \code{\link{testDAUresults-class}}.
 }
 \description{
-Test differential usage of amino acids with or without grouping in
+Test differential usage of amino acids with or without grouping between
 experimental sets and background sets.
 }
 \examples{

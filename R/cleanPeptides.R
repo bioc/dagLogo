@@ -1,11 +1,12 @@
 #' clean up peptides
-#' @description clean the input file. The function removes peptides without any anchors, 
-#' adds peptide for each additional anchor in each peptide, and allows multiple anchors as input.
+#' @description clean up the input peptide subsequences. The function removes 
+#' peptides which do NOT contain any anchoring amino acid. Adds peptide for
+#' each additional anchor in each peptide, and allows multiple anchoring amino acids.
 #' 
-#' @param dat input data. The input dat contains two columns symbol and peptides.
-#' the anchor AA must be in lower case.
-#' @param anchors a vector of character, anchor Amino Acid, must be lower case.
-#' @return an data.frame with columns: `symbol`, `peptides` and `anchor`
+#' @param dat input data. The input dat contains two columns `symbol`, protein ID,
+#' and `peptides`, peptide sequence.The anchoring amino acid must be in lower case.
+#' @param anchors A vector of character, anchoring amino acid must be in lower case.
+#' @return A data.frame with columns: `symbol`, `peptides` and `anchor`
 #' @export
 #' @author Jianhong Ou, Julie Zhu
 #' @examples 
@@ -16,9 +17,11 @@
 
 cleanPeptides <- function(dat, anchors){
   stopifnot(all(c("symbol", "peptides") %in% colnames(dat)))
-  stopifnot(is.character(anchors))
-  stopifnot(all(!grepl("[^a-z]", anchors)))
-  stopifnot(length(anchors)>0)
+  stopifnot(is.character(anchors) && length(anchors) > 0)
+  
+  ## specify 20 amino acids in one-letter symbol
+  stopifnot(all(grepl("[galmfwkqespvicyhrndt]", anchors)))
+  
   if(!is.data.frame(dat)){
     dat <- as.data.frame(dat, stringsAsFactors=FALSE)
   }
@@ -28,7 +31,8 @@ cleanPeptides <- function(dat, anchors){
   ## find the positions
   anchorPos <- gregexpr(paste0("[", paste(anchors, collapse = ""), "]"), 
                         as.character(dat$peptides))
-  ## keep one lower case per row and change all the other lower case into capital.
+  ## keep one lower case per row and change all the other lower case
+  ## into upper case.
   len <- lengths(anchorPos)
   dat <- dat[rep(seq.int(nrow(dat)), len), ]
   anchorPos <- unlist(anchorPos)

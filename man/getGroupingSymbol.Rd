@@ -18,7 +18,7 @@ properties. The available \code{groupingScheme} are "no","bulkiness_Zimmerman",
 "chemistry_property_Mahler_group", "consensus_similarity_SF_group", 
 "volume_Bigelow_group", "structure_alignments_Mirny_group", "polarity_Grantham_group",  
 "sequence_alignment_Dayhoff_group", and "custom". If "custom" is used, users 
-must define a grouping scheme using a list containing sublist named as "color",
+must define a grouping scheme using a list containing sublists named as "color",
 "symbol" and "group" using the function \code{\link{addScheme}}. No grouping 
 was applied for the first 12 schemes.}
 }

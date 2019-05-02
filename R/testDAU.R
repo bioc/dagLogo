@@ -64,7 +64,7 @@ addScheme <- function(color = vector("character"),
 
 #' Differential usage test of amino acids or amino acid groups.
 #'
-#' Test differential usage of amino acids with or without grouping in
+#' Test differential usage of amino acids with or without grouping between
 #' experimental sets and background sets.
 #'
 #' @param dagPeptides An object of Class \code{\link{dagPeptides-class}}.

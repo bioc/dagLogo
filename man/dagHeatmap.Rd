@@ -7,8 +7,8 @@
 dagHeatmap(testDAUresults, type = c("diff", "statistics"), ...)
 }
 \arguments{
-\item{testDAUresults}{An object of \code{\link{testDAUresults-class}} (results of 
-testing differential amino acid usage).}
+\item{testDAUresults}{An object of \code{\link{testDAUresults-class}}, which contains
+results of testing differential amino acid usage.}
 
 \item{type}{A character vector of length 1, the type of metrics to display 
 on y-axis. The available options are "diff" and "statistics", which are 

@@ -3,7 +3,8 @@
 \docType{data}
 \name{proteome.example}
 \alias{proteome.example}
-\title{An object of \code{\link{Proteome-class}} representing the subset of \emph{Drosophila melanogaster} proteome.}
+\title{An object of \code{\link{Proteome-class}} representing the subset of 
+\emph{Drosophila melanogaster} proteome.}
 \format{An object of \code{\link{Proteome-class}} for fly subset proteome. 
 The format is: A list with one data frame and an character.
 
@@ -27,7 +28,7 @@ proteome.example
 The subset \code{\link{Proteome-class}} of fruit fly.
 }
 \details{
-used in the examples
+used as an example dataset
 
 Annotation data obtained by:
 

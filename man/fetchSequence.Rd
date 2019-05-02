@@ -26,11 +26,11 @@ at position 123 or the position of the anchoring amino acid in the target
 peptide/protein sequence, for example, "123" for an amino acid at position 123; 
 or (2) a vector of subsequences containing the anchoring AAs.}
 
-\item{mart}{A Biomart database name you want to connect to. One of parameters 
-\code{mart} and \code{proteome} should be provided.}
+\item{mart}{A Biomart database name you want to connect to. Either of parameters 
+\code{mart} or \code{proteome} should be provided.}
 
-\item{proteome}{An object of \code{\link{Proteome-class}} class. One of parameters 
-\code{mart} and \code{\link{Proteome-class}} should be provided.}
+\item{proteome}{An object of \code{\link{Proteome-class}}. Either of parameters 
+\code{mart} or \code{\link{Proteome-class}} should be provided.}
 
 \item{upstreamOffset}{An integer, the upstream offset relative to
 the anchoring position.}
@@ -71,7 +71,7 @@ if (interactive())
 }
 
 
-## Case 2: You don't have the exactly postion infor, but You have the 
+## Case 2: You don't have the exactly postion information, but You have the 
 ## interesting peptide subsequences and the identifiers of their enclosing 
 ## peptide/protein sequences for fetching sequences using the fetchSequence
 ## function via the Biomart. In the following examples, the anchoring AAs 
@@ -96,7 +96,7 @@ if (interactive())
     })
 }
 
-## In following example, the anchoring AAs are lower case "s" for amino acid 
+## In following example, the anchoring AAs are lower-case "s" for amino acid 
 ## serine.
 if(interactive())
 {

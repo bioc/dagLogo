@@ -28,7 +28,7 @@ suppressPackageStartupMessages({
 # Introduction
 A sequence logo has been widely used as a graphical representation of an alignment of multiple amino acid (AA) or nucleic acid sequences.
 There is a package seqlogo[@Oliver2006] implemented in R to draw DNA sequence logos. 
-And another package motifStack[@Jianhong2012] was developed for drawing sequence logos for amino Acid, DNA and RNA sequences, which also has the capability for graphical representation of multiple motifs.
+And another package motifStack[@Jianhong2012] was developed for drawing sequence logos for protein, DNA and RNA sequences, which also has the capability for graphical representation of multiple motifs.
 
 IceLogo[@Colaert2009] is a tool developed in Java to visualize significantly conserved sequence patterns in
 an alignment of multiple peptide sequences against background sequences. Compared to 
@@ -76,7 +76,7 @@ if (interactive())
 }
 ```
 
-### Case 2: You don't have the exactly position information, but You have the interesting peptide subsequences and the identifiers of their enclosing peptide/protein sequences for fetching sequences using the fetchSequence function via the Biomart. In the following examples, the anchoring AAs are marked by asterisks.
+### Case 2: You don't have the exactly position information, but You have the interesting peptide subsequences and the identifiers of their enclosing peptide/protein sequences for fetching sequences using the fetchSequence function via the Biomart. In the following example, the anchoring AAs are marked by asterisks.
 
 ```{r fetchSequences2, results='hide'}
 if (interactive())
@@ -98,13 +98,17 @@ if (interactive())
 }
 ```
 
-In following example, the anchoring AAs are lower case "s" for amino acid serine.
+In following example, the anchoring AAs are lower-cased "s" for amino acid serine. Readundant
+input can be simplified using the helper function cleanPeptides().
 
 ```{r fetchSequences3, results='hide'}
 if(interactive()){
     try({
             dat <- read.csv(system.file("extdata", "peptides4dagLogo.csv",
                                 package = "dagLogo"))
+            ## cleanup the data
+            dat <- unique(cleanPeptides(dat, anchors = "s"))
+            
             mart <- useMart("ensembl")
             human_mart <-
             useDataset(mart = mart, dataset = "hsapiens_gene_ensembl")
@@ -126,7 +130,7 @@ to filter the anchorAA by subset of them, you may want to have a try `cleanPepti
 if(interactive()){
     dat <- read.csv(system.file("extdata", "peptides4dagLogo.csv",
                 package="dagLogo"))
-    dat <- cleanPeptides(dat, anchors = c("s", "t"))
+    dat <- unique(cleanPeptides(dat, anchors = c("s", "t")))
     mart <- useMart("ensembl", "hsapiens_gene_ensembl")
     seq <- fetchSequence(toupper(as.character(dat$symbol)), 
                          type="hgnc_symbol",
@@ -140,7 +144,7 @@ if(interactive()){
 ```
 
 
-Similarly, peptide sequences can be fetched from an predefined Proteome object.  
+Similarly, peptide sequences can be fetched from an predefined Proteome object by setting the parameter proteome to an Proteome object.  
   
   
 ### Case 3: You already have the unaligned peptides sequences in hand. Then you can use the formatSequence function to prepare an object of dagPeptides. Before doing that, you need prepare a Proteome object by the prepareProteome function.
@@ -160,13 +164,15 @@ seq <- formatSequence(seq = dat, proteome = proteome, upstreamOffset = 14,
 
 ## Step 2: Building background models  
 Once you have an object of dagPeptides in hand, you can start to build a background model
-for DAG test. The background could be random subsequences of a whole proteome or your inputs.
-If the background was built from a whole proteome or proteome without your inputs, 
+for differential (grouped) amino acid usage (DAG) test. The background could be random subsequences 
+from a whole proteome or your input.
+If the background was built from a whole proteome, or a proteome excluding users' inputs, 
 an object of Proteome is required. 
 
-Sequences provided by a fasta file or downloaded from the UniProt database can be used to prepare a Proteome object.
-Case 3 of Step 1 shows how to prepare a Proteome object from a fasta file. Here we show how to prepare an object of
-Proteome via the UniProt database.
+Sequences provided by a fasta file or downloaded from the UniProt database can be used to 
+prepare a Proteome object.
+Case 3 of Step 1 shows how to prepare a Proteome object from a fasta file. Here we show how to prepare an object of Proteome via the UniProt database.
+
 
 ```{r prepareProteome0}
 if(interactive()){
@@ -183,8 +189,8 @@ bg_ztest <- buildBackgroundModel(seq, background = "wholeProteome",
                                  proteome = proteome, testType = "ztest")
 ```
 
-## Step 3: Testing differential usage of (grouped) amino acids
-Test can be done without making any change to the formatted, aligned amino acid symbols. Alternatively, amino acids can be grouped on the basis of their physical and chemical properties and the formatted, aligned amino acid symbols are replaced by new sets of symbols for each group, such as "P", "N" and "U" for amino acids with positive charge, negative charge and no charge if the amino acids are grouped based on their charge.  
+## Step 3: Testing differential usage of (grouped) amino acid usage (DAG)
+Tests can be done without making any change to the formatted, aligned amino acid symbols. Alternatively, amino acids can be grouped on the basis of their physical and chemical properties and the formatted, aligned amino acid symbols are replaced by new sets of symbols for each group, such as "P", "N" and "U" for amino acids with positive charge, negative charge and no charge if the amino acids are grouped based on their charge.  
 
 ```{r testDAU}
 ## no grouping
@@ -208,7 +214,8 @@ t4 <- testDAU(dagPeptides = seq, dagBackground = bg_ztest,
 
 ## In case users prefer to use their own grouping scheme, dagLogo allows users
 ## to supply one as follows. The grouping scheme is named "custom_group" internally.
-## Add a grouping scheme based on the level 3 of BLOSUM50  
+## For example, the following example demonstrates how to add a grouping scheme
+## based on the level 3 of BLOSUM50.
 color = c(LVIMC = "#33FF00", AGSTP = "#CCFF00",
           FYW = '#00FF66', EDNQKRH = "#FF0066")
 symbol = c(LVIMC = "L", AGSTP = "A", FYW = "F", EDNQKRH = "E")
@@ -253,48 +260,6 @@ dagLogo(t3, groupingSymbol = getGroupingSymbol(t3@group), legend = TRUE)
 ```{r dagLogo4,fig.cap="hydrophobicity grouped",fig.width=8,fig.height=6}
 ## grouped on the basis of hydrophobicity.
 dagLogo(t4, groupingSymbol = getGroupingSymbol(t4@group), legend = TRUE)
-```
-
-# Another full example: Comparative analysis of the DNA-binding motif of CAPs using the packages motifStack and dagLogo  
-
-Catabolite Activator Protein (CAP), also known as cAMP Receptor Protein (CRP),is a transcription activator that binds more than 100 sites of the *E. coli* genome.
-
-The motif of the DNA-binding helix-turn-helix motif of the CAP family is first visualized by using the motifStack package.  Residues 7-13 form the first helix, 14-17 the turn and 18-26 the DNA recognition helix. The glycine at position 15 appears to be critical in forming the turn.
-
-```{r CAPmotif,fig.cap="Catobolite Activator Protein Motif",fig.width=8,fig.height=6}
-protein <- read.table(file.path(find.package("motifStack"), "extdata", 
-                                "cap.txt"))
-protein <- t(protein[, 1:20])
-motif <- pcm2pfm(protein)
-motif <- new("pfm", mat = motif,name = "CAP",
-            color = colorset(alphabet = "AA", colorScheme = "chemistry"))
-##The DNA-binding helix-turn-helix motif of the CAP family ploted by motifStack
-plotMotifLogo(motif@mat, motifName = motif@name,
-              p = motif@background, colset = motif@color)
-```
-
-For comparison, then the CAP DNA-binding motif is visualized using the dagLogo package.  
- 
-```{r CAPdagLogo,fig.cap="Catobolite Activator Protein Motif",fig.width=8,fig.height=6}
-cap <- as.character(readAAStringSet(system.file("extdata", 
-                                                "cap.fasta", 
-                                                package="dagLogo")))
-data("ecoli.proteome")
-seq <- formatSequence(seq = cap, proteome = ecoli.proteome)
-bg <- buildBackgroundModel(seq,
-                           background= "wholeProteome",
-                           proteome = ecoli.proteome,
-                           numSubsamples = 10L)
-##The DNA-binding helix-turn-helix motif of the CAP family ploted by dagLogo
-t0 <- testDAU(seq, bg)
-dagLogo(t0)
-```
-
-Residuals at positions 10, 14, 16, 21 and 25 are partially or completely buried in the 3-D structure of CAPs are preferentially hydrophobic. Thee amino acids of the CAP DNA-binding motifs are grouped on the basis of their chemical properties and visualized using dagLogo as follows. This plot clearly displays those preferentially hydrophobic sites.
-```{r CAPgroup,fig.cap="Catobolite Activator Protein Motif",fig.width=8,fig.height=6}
-## The DNA-binding helix-turn-helix motif of the CAP family grouped by hydrophobic
-t1 <- testDAU(seq, bg, groupingScheme = "hydrophobicity_HW_group")
-dagLogo(t1, groupingSymbol = getGroupingSymbol(t1@group), legend = TRUE)
 ```
 
 # Session Info

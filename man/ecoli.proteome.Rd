@@ -3,7 +3,8 @@
 \docType{data}
 \name{ecoli.proteome}
 \alias{ecoli.proteome}
-\title{An object of \code{\link{Proteome-class}} representing the \emph{Escherichia coli} proteome.}
+\title{An object of \code{\link{Proteome-class}} representing the 
+\emph{Escherichia coli} proteome.}
 \format{An object of  \code{\link{Proteome-class}} for Escherichia coli proteome. 
 The format is: A list with one data frame and an character.
 
@@ -26,7 +27,7 @@ ecoli.proteome
 A dataset containing the \emph{E. coli} proteome.
 }
 \details{
-used in the examples
+used as an example dataset
 
 Annotation data obtained by:
 

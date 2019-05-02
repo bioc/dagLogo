@@ -2,21 +2,21 @@
 % Please edit documentation in R/dagLogo.R
 \name{dagLogo}
 \alias{dagLogo}
-\title{Create sequence logos.}
+\title{Create sequence logo.}
 \usage{
 dagLogo(testDAUresults, type = c("diff", "zscore"),
   pvalueCutoff = 0.05,
   groupingSymbol = getGroupingSymbol(testDAUresults@group),
-  font = "Helvetica-Bold", fontface = "bold", fontsize = 5,
+  font = "Helvetica", fontface = "bold", fontsize = 5,
   title = NULL, legend = FALSE, labelRelativeToAnchor = FALSE,
-  labels = NULL, alpha = 0.5)
+  labels = NULL, alpha = 1)
 }
 \arguments{
-\item{testDAUresults}{An object of \code{\link{testDAUresults-class}} (results of
-testing differential amino acid usage).}
+\item{testDAUresults}{An object of \code{\link{testDAUresults-class}}, which
+cintains results of testing differential amino acid usage).}
 
-\item{type}{A character vector of length 1. Type of statistics to display 
-on y-axis, available choices are "diff" or "zscore".}
+\item{type}{A character vector of length 1. Type of statistics to be displayed 
+on y-axis. Available choices are "diff" or "zscore".}
 
 \item{pvalueCutoff}{A numeric vector of length 1. A cutoff of p-values.}
 
@@ -45,7 +45,7 @@ x-axis label should be adjusted relative to the anchoring position.}
 A sequence Logo is plotted without returned values.
 }
 \description{
-Create sequence logos for visualizing results of testing differential usage 
+Create sequence logo for visualizing results of testing differential usage 
 of amino acids.
 }
 \examples{

@@ -19,10 +19,10 @@
 #' at position 123 or the position of the anchoring amino acid in the target 
 #' peptide/protein sequence, for example, "123" for an amino acid at position 123; 
 #' or (2) a vector of subsequences containing the anchoring AAs.
-#' @param mart A Biomart database name you want to connect to. One of parameters 
-#' \code{mart} and \code{proteome} should be provided.
-#' @param proteome An object of \code{\link{Proteome-class}} class. One of parameters 
-#' \code{mart} and \code{\link{Proteome-class}} should be provided.
+#' @param mart A Biomart database name you want to connect to. Either of parameters 
+#' \code{mart} or \code{proteome} should be provided.
+#' @param proteome An object of \code{\link{Proteome-class}}. Either of parameters 
+#' \code{mart} or \code{\link{Proteome-class}} should be provided.
 #' @param upstreamOffset An integer, the upstream offset relative to
 #' the anchoring position.
 #' @param downstreamOffset An integer, the downstream offset relative
@@ -57,7 +57,7 @@
 #' }
 #' 
 #' 
-#' ## Case 2: You don't have the exactly postion infor, but You have the 
+#' ## Case 2: You don't have the exactly postion information, but You have the 
 #' ## interesting peptide subsequences and the identifiers of their enclosing 
 #' ## peptide/protein sequences for fetching sequences using the fetchSequence
 #' ## function via the Biomart. In the following examples, the anchoring AAs 
@@ -82,7 +82,7 @@
 #'     })
 #' }
 #' 
-#' ## In following example, the anchoring AAs are lower case "s" for amino acid 
+#' ## In following example, the anchoring AAs are lower-case "s" for amino acid 
 #' ## serine.
 #' if(interactive())
 #' {
@@ -120,21 +120,21 @@ fetchSequence <-function(IDs,
     }
     if (!missing(mart) && class(mart) != "Mart") 
     {
-        stop("mart should be an object of Mart class", call. = FALSE)
+        stop("mart should be an object of the Mart class", call. = FALSE)
     }
     if (!missing(proteome) && class(proteome) != "Proteome") 
     {
         stop("proteome should be an object of Proteome class.",
-            "Try ?prepareProteome to get help", call. = FALSE)
+            "Try ?prepareProteome to get help.", call. = FALSE)
     }
     if (missing(upstreamOffset) || missing(downstreamOffset)) 
     {
-        stop("Please provide the upstreamOffset and downstreamOffset position 
+        stop("Please provide the upstreamOffset and downstreamOffset positions 
             relative to the anchoring amino acid", call. = FALSE)
     }
     if (upstreamOffset < 0 || downstreamOffset < 0) 
     {
-        stop("The upstreamOffset and downstreamOffset should be a positive integer",
+        stop("The upstreamOffset and downstreamOffset should be positive integers.",
              call. = FALSE)
     }
     # if (downstreamOffset > 20 || upstreamOffset > 20) 
@@ -240,6 +240,12 @@ fetchSequence <-function(IDs,
                                type = type,
                                seqType = "peptide",
                                mart = mart)
+        
+        ## remove rows without available protein sequences in databases
+        ## Surprisingly, a significant fraction of IDs have no Ensembl protein sequences.
+        ## It might be better to manually get the protein sequence from other resources.
+        protein <- protein[!protein$peptide =="Sequence unavailable", ]
+        
         if (nrow(protein) < 1)
         {
             stop("Too few retrieved protein sequences from Ensembl Biomart.",
@@ -279,7 +285,7 @@ fetchSequence <-function(IDs,
         anchorPos <- mapply(function(.ele, .pep) {
             BiocGenerics::start(matchPattern(AAString(toupper(.ele)), .pep))
         }, dat$anchorPos, dat$peptide, SIMPLIFY = FALSE)
-        ## get the absolute index for the  anchoring amino acids in the first 
+        ## get the absolute index for the anchoring amino acids in the first 
         ## occurence of query peptide
         anchorPos <- mapply(function(.pos, .anchor) {
             if (length(.pos) == 0) 

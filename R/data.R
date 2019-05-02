@@ -1,5 +1,6 @@
 #' @docType data
-#' @title An object of \code{\link{Proteome-class}} representing the \emph{Escherichia coli} proteome.
+#' @title An object of \code{\link{Proteome-class}} representing the 
+#' \emph{Escherichia coli} proteome.
 #' @description A dataset containing the \emph{E. coli} proteome.
 #' @format
 #' An object of  \code{\link{Proteome-class}} for Escherichia coli proteome. 
@@ -18,7 +19,7 @@
 #' @source \url{http://www.uniprot.org/}
 #' 
 #' @details
-#'used in the examples
+#' used as an example dataset
 #'
 #' Annotation data obtained by:
 #' 
@@ -36,7 +37,8 @@
 "ecoli.proteome"
 
 #' @docType data
-#' @title An object of \code{\link{Proteome-class}} representing the subset of \emph{Drosophila melanogaster} proteome.
+#' @title An object of \code{\link{Proteome-class}} representing the subset of 
+#' \emph{Drosophila melanogaster} proteome.
 #' @description The subset \code{\link{Proteome-class}} of fruit fly.
 #' @format An object of \code{\link{Proteome-class}} for fly subset proteome. 
 #' The format is: A list with one data frame and an character.
@@ -55,7 +57,7 @@
 #' @source \url{http://www.uniprot.org/}
 #' 
 #' @details
-#' used in the examples
+#' used as an example dataset
 #' 
 #' Annotation data obtained by:
 #' 
@@ -99,7 +101,7 @@
 #'     *`downstream`: a character vector, downstream peptides
 #'
 #' @details
-#'   used in the examples
+#'   used as an example dataset
 #'   
 #'   seq obtained by:
 #'   

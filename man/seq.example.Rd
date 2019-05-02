@@ -29,7 +29,7 @@ seq.example
 A dataset containing the acetylated lysine-containing peptides from \emph{Drosophila melanogaster}.
 }
 \details{
-used in the examples
+used as an example dataset
   
   seq obtained by:
   

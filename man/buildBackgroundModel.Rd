@@ -11,18 +11,18 @@ buildBackgroundModel(dagPeptides, background = c("wholeProteome",
   replacement = FALSE, testType = c("ztest", "fisher"), proteome)
 }
 \arguments{
-\item{dagPeptides}{An object of \code{\link{dagPeptides-class}} Class containing 
+\item{dagPeptides}{An object of \code{\link{dagPeptides-class}} containing 
 peptide sequences as the input set.}
 
-\item{background}{A character vector with defaults: "wholeProteome" and "inputSet", 
-"nonInputSet", indicating what set of peptide sequences should be considered to 
+\item{background}{A character vector with options: "wholeProteome", "inputSet", 
+and "nonInputSet", indicating what set of peptide sequences should be considered to 
 generate a background model.}
 
-\item{model}{A character vector with defaults: "any" and "anchored", indicating 
+\item{model}{A character vector with options: "any" and "anchored", indicating 
 whether an anchoring position should be applied to generate a background model.}
 
-\item{targetPosition}{A character vector with defaults: "any", "Nterminus" and 
-"Cterminus", indicating whether which part of protein sequences of choice should
+\item{targetPosition}{A character vector with options: "any", "Nterminus" and
+"Cterminus", indicating which part of protein sequences of choice should
 be used to generate a background model.}
 
 \item{uniqueSeq}{A logical vector indicating whether only unique peptide sequences
@@ -38,28 +38,44 @@ is allowed for random sampling.}
 \item{testType}{A character vector of length 1. Available options are "ztest" 
 and "fisher".}
 
-\item{proteome}{an object of Proteome, output of \code{\link{prepareProteome}}}
+\item{proteome}{An object of Proteome, output of \code{\link{prepareProteome}}}
 }
 \value{
-An object of \code{\link{dagBackground-class}} Class.
+An object of \code{\link{dagBackground-class}}.
 }
 \description{
 A method used to build background models for testing differential amino acid usage
 }
 \details{
-The background could be generated from wholeGenome, inputSet or nonInputSet.
-whole genome: randomly select subsequences from the whole genome with each subsequence 
- containing amino acids with same width of input sequences.
- anchored whole genome: randomly select subsequences from the whole genome with 
- each subsequence containing amino acids with same width of input sequences
- where the middle amino acids must contain anchor amino acid, e.g., K, which is
- specified by user.
- input set: same to whole genome, but only use protein sequence from input id and not 
- including the site specified in input sequences
- anchored input set: same to anchored whole genome, but only use protein sequences from input id, 
- and not including the site specified in input sequences.
- non-input set: whole genome - input set.
- anchored non-input set: whole genome - input set and the middle amino acids must contain anchor amino acid.
+The background could be generated from wholeProteome, inputSet or nonInputSet.
+Case 1: If background ="wholeProteome" and model = "any": The background set 
+is composed of randomly selected subsequences from the wholeProteome with
+each subsequence of the same length as input sequences.
+
+Case 2: If background ="wholeProteome and model = "anchored": The background
+set is composed of randomly selected subsequences from the wholeProteome
+with each subsequence of same length as input sequences.Additionally, the
+amino acids at the anchoring positions must be the same amino acid as that
+defined in the dagPeptides object,such as "K" for lysine.
+
+Case 3: If background ="inputSet" and model = "any": similar to Case 1, but
+the full length protein sequences matching the protein sequence IDs in the inputSet
+are used for build background model after excluding the subsequences specified
+in the inputSet from the full length sequences.
+
+Case 4: If background ="inputSet" and model = "anchored": similar to Case 2, but
+the full-length protein sequences matching the protein sequence IDs in the inputSet
+are used for build background model after excluding the subsequences specified
+in the inputSet from the full length sequences.
+ 
+Case 5: If background ="nonInputSet" and model = "any": The background set
+is composed of randomly selected subsequences from the wholeProteome, not
+including the sequences corresponding to the inpuSet sequencesm with each
+subsequence of same length as input sequences.
+
+Case 6: If background ="nonInputSet" and model = "anchored": similar to Case 5, but
+the amino acids at the anchoring positions must be the same amino acid as that 
+defined in the dagPeptides object, such as "K" for lysine.
 }
 \examples{
 dat <- unlist(read.delim(system.file(

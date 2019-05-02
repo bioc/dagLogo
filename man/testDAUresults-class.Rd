@@ -17,7 +17,7 @@ amino acid.}
 \item{\code{testType}}{A character vector of length 1, the type of statistic testing.
 The available options are "fisher" and "z-test".}
 
-\item{\code{difference}}{A numeric matrix consisting of differences of amino acid. 
+\item{\code{difference}}{A numeric matrix consisting of differences of amino acid 
 proportions between the test set and the background set of aligned, formatted 
 peptides at each position.}
 
@@ -26,10 +26,11 @@ Z-test and Fisher's exact test, respectively.}
 
 \item{\code{pvalue}}{A numeric matrix consisting of p-values.}
 
-\item{\code{background}}{A numeric matrix consisting amino acid proportions in the 
+\item{\code{background}}{A numeric matrix consisting of amino acid proportions in the 
 background set of aligned, formatted peptides at each position.}
 
-\item{\code{motif}}{A numeric matrix consisting of proportions for dagLogo.}
+\item{\code{motif}}{A numeric matrix consisting of amino acid proportions at each 
+position for visualization by dagLogo.}
 
 \item{\code{upstreamOffset}}{A positive integer, the upstream offset
 relative to the anchoring position.}

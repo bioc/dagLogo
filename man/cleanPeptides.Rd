@@ -7,17 +7,18 @@
 cleanPeptides(dat, anchors)
 }
 \arguments{
-\item{dat}{input data. The input dat contains two columns symbol and peptides.
-the anchor AA must be in lower case.}
+\item{dat}{input data. The input dat contains two columns `symbol`, protein ID,
+and `peptides`, peptide sequence.The anchoring amino acid must be in lower case.}
 
-\item{anchors}{a vector of character, anchor Amino Acid, must be lower case.}
+\item{anchors}{A vector of character, anchoring amino acid must be in lower case.}
 }
 \value{
-an data.frame with columns: `symbol`, `peptides` and `anchor`
+A data.frame with columns: `symbol`, `peptides` and `anchor`
 }
 \description{
-clean the input file. The function removes peptides without any anchors, 
-adds peptide for each additional anchor in each peptide, and allows multiple anchors as input.
+clean up the input peptide subsequences. The function removes 
+peptides which do NOT contain any anchoring amino acid. Adds peptide for
+each additional anchor in each peptide, and allows multiple anchoring amino acids.
 }
 \examples{
 dat <- read.csv(system.file("extdata", "peptides2filter.csv", package="dagLogo"))

@@ -7,16 +7,16 @@
 initiateBackgroundModel(background, numSubsamples = 1L, testType)
 }
 \arguments{
-\item{background}{A list each element of which is a vector of aligned peptide
+\item{background}{A list, each element of which is a vector of aligned peptide
 sequences of the same length.}
 
 \item{numSubsamples}{An integer, the number of random samplings to get 
-background sequence sets.}
+background sequence set.}
 
-\item{testType}{An character, the test type.}
+\item{testType}{An character, the type of statistic testing : "ztest" or "fisher".}
 }
 \value{
-An object of \code{\link{dagBackground-class}} Class.
+An object of \code{\link{dagBackground-class}}.
 }
 \description{
 Create a new \code{\link{dagBackground-class}} object for \code{\link{testDAU}}.

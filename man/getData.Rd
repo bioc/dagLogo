@@ -14,8 +14,8 @@ the backgroundSet, and the Z-scores or odds ratios when Z-test or Fisher's
 exact test is performed to test the differential usage of amino acid at each 
 position between the two sets.}
 
-\item{testDAUresults}{An object of \code{\link{testDAUresults-class}} Class (results
-of testing differential amino acid usage).}
+\item{testDAUresults}{An object of \code{\link{testDAUresults-class}},
+which contains results of testing differential amino acid usage).}
 }
 \value{
 A list containing the following components:
