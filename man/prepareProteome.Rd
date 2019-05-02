@@ -4,14 +4,16 @@
 \alias{prepareProteome}
 \title{prepare proteome for background building}
 \usage{
-prepareProteome(UniProt.ws, fasta, species = "unknown")
+prepareProteome(source, fasta, species = "unknown", ...)
 }
 \arguments{
-\item{UniProt.ws}{an object of UniProt.ws}
+\item{source}{An object of \code{\link{UniProt.ws}} or A character "UniProt".}
 
 \item{fasta}{fasta file name or an object of AAStringSet}
 
 \item{species}{an character to assign the species of the proteome}
+
+\item{...}{parameters could be passed to \link{prepareProteomeByFTP}.}
 }
 \value{
 an object of Proteome which contain protein sequence information.

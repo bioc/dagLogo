@@ -170,9 +170,7 @@ Proteome via the UniProt database.
 
 ```{r prepareProteome0}
 if(interactive()){
-    library(UniProt.ws)
-    UniProt.ws <- UniProt.ws(taxId=9606)
-    proteome <- prepareProteome(UniProt.ws=UniProt.ws)
+    proteome <- prepareProteome("UniProt", species = "Homo sapiens")
 }
 ```
 

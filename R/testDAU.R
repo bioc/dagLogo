@@ -44,8 +44,8 @@ addScheme <- function(color = vector("character"),
             stop("Wrong grouping specification:", 
                  "The length of color, symbol and group should be the same!")
         }
-        if(names(color) != names(symbol) || names(color) != names(group) ||
-           names(symbol) != names(group))
+        if(any(names(color) != names(symbol)) || any(names(color) != names(group)) ||
+           any(names(symbol) != names(group)))
         {
             stop("The names of color, symbol and group should be the same!") 
         }

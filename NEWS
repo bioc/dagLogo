@@ -1,3 +1,8 @@
+CHANGES IN VERSION 1.23.1
+-----------------------
+    o Add function prepareProteomeByFTP
+    o fix the bug in addScheme
+    
 CHANGES IN VERSION 1.21.4
 -----------------------
     o Fix the bug if there are multiple position in one peptides for fetchSequence.
