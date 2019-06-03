@@ -5,7 +5,7 @@ date: "`r doc_date()`"
 package: "`r pkg_ver('dagLogo')`"
 bibliography: bibliography.bib
 abstract: >
-  A sequence logo has been widely used as a graphical representation of aligned multiple amino acid (AA) or nucleic acid sequences. Our R/Bioconductor package dagLogo can be used to visualize amino acids of significantly differential usage, with or without grouping based on their properties as individual AAs or within proteins, between experimental sets and background sets.
+  Sequence logo has been widely used as a graphical representation of nucleic acid motifs and conserved amino acid (AA) usage. We have developed a R/Bioconductor package _dagLogo_ to facilitate the identification and visualization of significant differential usage of AAs between experimental sets and various background sets, with or without grouping based on AA properties.
 vignette: >
   %\VignetteIndexEntry{dagLogo Vignette}
   %\VignetteEngine{knitr::rmarkdown}
@@ -26,36 +26,36 @@ suppressPackageStartupMessages({
 ```
 
 # Introduction
-A sequence logo has been widely used as a graphical representation of an alignment of multiple amino acid (AA) or nucleic acid sequences.
-There is a package seqlogo[@Oliver2006] implemented in R to draw DNA sequence logos. 
-And another package motifStack[@Jianhong2012] was developed for drawing sequence logos for protein, DNA and RNA sequences, which also has the capability for graphical representation of multiple motifs.
+A sequence logo has been widely used as a graphical representation of nucleic acid sequence motifs. 
+There is a R package _seqlogo_[@Oliver2006] for drawing sequence logos for a single DNA motif.
+There is another R package _motifStack_[@ou2018motifstack] for depicting individual sequence motif as well as multiple motifs for amino acid (AA), DNA and RNA sequences.
 
-IceLogo[@Colaert2009] is a tool developed in Java to visualize significantly conserved sequence patterns in
-an alignment of multiple peptide sequences against background sequences. Compared to 
-webLogo[@Crooks2004], which relies on information theory, IceLogo builds on probability theory. It is
-reported that IceLogo has a more dynamic nature and is more appropriate for analysis of
+_IceLogo_[@Colaert2009] is a tool developed in Java for visualizing significantly conserved sequence
+patterns in a list of aligned AA sequences against a set of background sequences. Compared to 
+_webLogo_[@Crooks2004], which relies on information theory, _IceLogo_ builds on probability theory. 
+It is reported that _IceLogo_ has a more dynamic nature and is more appropriate for analysis of
 conserved sequence patterns.
 
-However, IceLogo can only compare conserved sequences to reference sequences at the individual amino acid level. 
-As we know, some conserved sequence patterns are not conserved at the individual amino acid level, but conserved at the level of amino acids grouped on the basis of their physical and chemical properties, such as charge, hydrophobicity and etc.
+However, _IceLogo_ can only compare conserved sequences to reference sequences at the individual amino acid level. 
+As we know, some conserved sequence patterns are not conserved at the individual amino acid level, but conserved at the level of amino acid group characteristic of their physical and chemical properties, such as charge and hydrophobicity.
 
-Here we developed a R/Bioconductor package dagLogo, inspired by IceLogo, to visualize significantly conserved sequence patterns relative to a proper background set of sequences, with or without grouping amino acid residuals based on their physical and chemical properties. The flowchart of performing dagLogo analysis is as shown in Figure 1. 
+Here we developed a R/Bioconductor package _dagLogo_, for visualizing significantly conserved sequence patterns relative to a proper background set of sequences, with or without grouping amino acid residuals based on their physical and chemical properties. Figure 1 shows the flowchart of performing analysis using dagLogo. Comparing to existing tools, _dagLogo_ allows aligned or not aligned subsequences of different length as input; Provides more options and functions to generate various background sets that can be tailored to fit the experimental design; Both significantly over- and under-represented amino acid residues can be plotted; AA residues can be grouped and statistical significance test can be performed at the group level. 
   
-![Figure 1. Flowchart of performing dagLogo analyses. The two ways to prepare a Proteome object are colored in greenish and yellowish. The two alternative ways to build an object of dagPeptides are colored in blue and red.](dagLogo_flowchart.png).
+![Figure 1. Flowchart of performing analysis using _dagLogo_. Two ways to prepare an object of `Proteome` are colored in greenish and yellowish, while two alternative ways to build an object of `dagPeptides` are colored in blue and red.](dagLogo_flowchart.png).
 
-Figure 1. Flowchart of performing dagLogo analyses. The two ways to prepare a Proteome object are colored in greenish and yellowish. The two alternative ways to build an object of dagPeptides are colored in blue and red.
+Figure 1. Flowchart of performing analysis using _dagLogo_. Two ways to prepare an object of `Proteome` are colored in greenish and yellowish, while two alternative ways to build an object of `dagPeptides` are colored in blue and red.
 
-# Demonstration of dagLogo application
+# Step-by-step guide on using _dagLogo_
 
-## load the library
+## First load the library _dagLogo_
 
 ```{r}
 library(dagLogo)
 ```
 
 
-## Step 1: Fetching peptide sequences from the Biomart
-### Case 1: You have both positions of the anchoring AAs and the identifiers of their enclosing peptide/protein sequences for fetching sequences using the fetchSequence function via the Biomart.
+## Step 1: Fetching peptide sequences from BioMart
+### Case 1: Fetch sequences using the `fetchSequence` function in _biomaRt_ package given a list of gene identifiers and the corresponding positions of the anchoring AA.
 ```{r fetchSequences1, results='hide'}
 ##just in case biomaRt server does not response
 if (interactive())
@@ -76,7 +76,7 @@ if (interactive())
 }
 ```
 
-### Case 2: You don't have the exactly position information, but You have the interesting peptide subsequences and the identifiers of their enclosing peptide/protein sequences for fetching sequences using the fetchSequence function via the Biomart. In the following example, the anchoring AAs are marked by asterisks.
+### Case 2: Fetch sequences using the `fetchSequence` function in _biomaRt_ package given a list of gene identifiers and the corresponding peptide subsequences of interest with the anchoring AA marked such as asterisks or lower case of one or more AA letters.
 
 ```{r fetchSequences2, results='hide'}
 if (interactive())
@@ -98,8 +98,7 @@ if (interactive())
 }
 ```
 
-In following example, the anchoring AAs are lower-cased "s" for amino acid serine. Readundant
-input can be simplified using the helper function cleanPeptides().
+In the following example, the anchoring AA is marked as lower case "s" for amino acid serine.
 
 ```{r fetchSequences3, results='hide'}
 if(interactive()){
@@ -124,8 +123,10 @@ if(interactive()){
 }
 ```
 
-If you have multiple anchorAA is represented by lower case of amino acid and you want 
-to filter the anchorAA by subset of them, you may want to have a try `cleanPeptides`.
+The function `cleanPeptides` can be used to select a subset of data to analyze
+when input data contains multiple anchoring AAs, represented as lower case of 
+AAs.
+
 ```{r fetchSequences4}
 if(interactive()){
     dat <- read.csv(system.file("extdata", "peptides4dagLogo.csv",
@@ -144,10 +145,10 @@ if(interactive()){
 ```
 
 
-Similarly, peptide sequences can be fetched from an predefined Proteome object by setting the parameter proteome to an Proteome object.  
+Similarly, peptide sequences can be fetched from an object of Proteome.  
   
   
-### Case 3: You already have the unaligned peptides sequences in hand. Then you can use the formatSequence function to prepare an object of dagPeptides. Before doing that, you need prepare a Proteome object by the prepareProteome function.
+### Case 3: Prepare an object of `dagPeptides` using `prepareProteome` and `formatSequence` functions sequentially given a list of unaligned/aligned peptide sequences.
 
 ```{r formatSequence, results='hide'}
 dat <- unlist(read.delim(system.file("extdata", "grB.txt", package = "dagLogo"),
@@ -163,15 +164,9 @@ seq <- formatSequence(seq = dat, proteome = proteome, upstreamOffset = 14,
 ```
 
 ## Step 2: Building background models  
-Once you have an object of dagPeptides in hand, you can start to build a background model
-for differential (grouped) amino acid usage (DAG) test. The background could be random subsequences 
-from a whole proteome or your input.
-If the background was built from a whole proteome, or a proteome excluding users' inputs, 
-an object of Proteome is required. 
+Once you have an object of `dagPeptides` in hand, you can start to build a background model for statistical significance test. The background could be a set of random subsequences of a whole proteome or your inputs. To build a background model from a whole proteome, an object of Proteome is required.
+Sequences provided by a fasta file or downloaded from the UniProt database can be used to prepare a `Proteome` object. Case 3 in step 1 shows how to prepare a `Proteome` object from a fasta file. The following code snippet shows how to prepare an object of `Proteome` using the _UniProt.ws_ package.
 
-Sequences provided by a fasta file or downloaded from the UniProt database can be used to 
-prepare a Proteome object.
-Case 3 of Step 1 shows how to prepare a Proteome object from a fasta file. Here we show how to prepare an object of Proteome via the UniProt database.
 
 
 ```{r prepareProteome0}
@@ -180,7 +175,7 @@ if(interactive()){
 }
 ```
 
-Then the proteome is used for background model building for Fisher's exact test or *Z*-test as follows. 
+The prepared `Proteome` object can be used as a background model for the following statistical significance test using Fisher’s exact test or *Z*-test.
 
 ```{r buildBackgroundModel}
 bg_fisher <- buildBackgroundModel(seq, background = "wholeProteome", 
@@ -189,33 +184,34 @@ bg_ztest <- buildBackgroundModel(seq, background = "wholeProteome",
                                  proteome = proteome, testType = "ztest")
 ```
 
-## Step 3: Testing differential usage of (grouped) amino acid usage (DAG)
-Tests can be done without making any change to the formatted, aligned amino acid symbols. Alternatively, amino acids can be grouped on the basis of their physical and chemical properties and the formatted, aligned amino acid symbols are replaced by new sets of symbols for each group, such as "P", "N" and "U" for amino acids with positive charge, negative charge and no charge if the amino acids are grouped based on their charge.  
+## Step 3: Statistical significance test for differential usage of amino acids with or without grouping
+Statistical significance test can be performed at the AA level without making any change to the formatted and aligned amino acids. Alternatively, statistical significance test can be performed at the AA group level, where amino acids are grouped based on their physical or chemical properties. To group the AAs, the formatted and aligned AA symbols are replaced by a new set of symbols representing their corresponding groups. For example, if AA charge is of your interest, then group symbols "P", "N" and "U" are used to replace amino acids with positive charge, negative charge and no charge respectively. A few pre-built grouping schemes have been made available for you to specify as follows. 
 
 ```{r testDAU}
 ## no grouping
 t0 <- testDAU(seq, dagBackground = bg_ztest)
 
-## grouping based on properties of individual amino acids.
+## grouping based on chemical properties of AAs.
 t1 <- testDAU(dagPeptides = seq, dagBackground = bg_ztest,
               groupingScheme = "chemistry_property_Mahler_group")
 
-## grouped on the basis of charge.
+## grouping based on the charge of AAs.
 t2 <- testDAU(dagPeptides = seq, dagBackground = bg_ztest, 
               groupingScheme = "charge_group")
 
-## grouped on the basis of consensus similarity.
+## grouping based on the consensus similarity.
 t3 <- testDAU(dagPeptides = seq, dagBackground = bg_ztest, 
               groupingScheme = "consensus_similarity_SF_group")
 
-## grouped on the basis of hydrophobicity. 
+## grouping based on the hydrophobicity. 
 t4 <- testDAU(dagPeptides = seq, dagBackground = bg_ztest, 
               groupingScheme = "hydrophobicity_KD")
 
-## In case users prefer to use their own grouping scheme, dagLogo allows users
-## to supply one as follows. The grouping scheme is named "custom_group" internally.
-## For example, the following example demonstrates how to add a grouping scheme
-## based on the level 3 of BLOSUM50.
+## In addition, dagLogo allows users to use their own grouping 
+## Scheme. The following example shows how to supply a customized 
+## scheme. Please note that the user-supplied grouping is named 
+## as "custom_group" internally.
+## Add a grouping scheme based on the level 3 of BLOSUM50
 color = c(LVIMC = "#33FF00", AGSTP = "#CCFF00",
           FYW = '#00FF66', EDNQKRH = "#FF0066")
 symbol = c(LVIMC = "L", AGSTP = "A", FYW = "F", EDNQKRH = "E")
@@ -229,8 +225,8 @@ t5 <- testDAU(dagPeptides = seq, dagBackground = bg_ztest,
               groupingScheme = "custom_group")
 ```
 
-## Step 4: Visualizing test results
-We can use a heatmap or logo to display the test results.
+## Step 4: Visualize significance test results
+We can use a heatmap or logo to display the statistical significance test results.
 
 ```{r dagHeatmap,fig.cap="DAG heatmap",fig.width=8,fig.height=6}
 ##Plot a heatmap to show the results
@@ -238,26 +234,26 @@ dagHeatmap(t0)
 ```
 
 ```{r dagLogo0,fig.cap="ungrouped results",fig.width=8,fig.height=6}
-## dagLogo showing ungrouped AAs differentially used
+## dagLogo showing differentially used AAs without grouping
 dagLogo(t0) 
 ```
 
-```{r dagLogo1,fig.cap="classic grouped",fig.width=8,fig.height=6}
-## dagLogo showing AA grouped based on properties of individual amino acids.
+```{r dagLogo1,fig.cap="classic grouping",fig.width=8,fig.height=6}
+## dagLogo showing AA grouped based on properties of individual a amino acid.
 dagLogo(t1, groupingSymbol = getGroupingSymbol(t1@group), legend = TRUE)
 ```
 
-```{r dagLogo2,fig.cap="charge grouped",fig.width=8,fig.height=6}
+```{r dagLogo2,fig.cap="grouped on charge",fig.width=8,fig.height=6}
 ## grouped on the basis of charge.
 dagLogo(t2, groupingSymbol = getGroupingSymbol(t2@group), legend = TRUE)
 ```
 
-```{r dagLogo3,fig.cap="chemistry grouped",fig.width=8,fig.height=6}
+```{r dagLogo3,fig.cap="grouped on chemical property",fig.width=8,fig.height=6}
 ## grouped on the basis of consensus similarity.
 dagLogo(t3, groupingSymbol = getGroupingSymbol(t3@group), legend = TRUE)
 ```
 
-```{r dagLogo4,fig.cap="hydrophobicity grouped",fig.width=8,fig.height=6}
+```{r dagLogo4,fig.cap="grouped on hydrophobicity",fig.width=8,fig.height=6}
 ## grouped on the basis of hydrophobicity.
 dagLogo(t4, groupingSymbol = getGroupingSymbol(t4@group), legend = TRUE)
 ```
