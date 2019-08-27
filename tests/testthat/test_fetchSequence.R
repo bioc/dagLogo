@@ -10,5 +10,15 @@ test_that("test_fetchSequence", {
         upstreamOffset = 5, downstreamOffset = 5)
     expect_equal(paste(dag.peptides@peptides[1, ], collapse = ""), 
         "TQTQDQPMEEE")
+    if(Sys.getenv("USER")=="jianhongou"){
+      mart <- useMart("ensembl")
+      mart <- useDataset(mart = mart, dataset = "hsapiens_gene_ensembl")
+      protein <- fetchSequence(IDs = unique(as.character(1:2)),
+                             type = "entrezgene",
+                             mart = mart,
+                             anchorPos = c("L11", "L11"),
+                             upstreamOffset = 5,
+                             downstreamOffset = 5)
+    }
 })
 
