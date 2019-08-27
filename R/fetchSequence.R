@@ -29,6 +29,7 @@
 #' to the anchoring position.
 #' @import biomaRt
 #' @importFrom BiocGenerics start
+#' @importFrom utils adist
 #' @import methods
 #' @return An object of class \code{\link{dagPeptides-class}} 
 #' @export
@@ -236,10 +237,22 @@ fetchSequence <-function(IDs,
     
     if (!missing(mart))  ## retreive sequence from biomart
     {
+        possibleTypeIds <- listFilters(mart = mart)
+        if(!type[1] %in% possibleTypeIds[, 1]){
+          if(type[1]=="entrezgene" && "entrezgene_id" %in% possibleTypeIds[, 1]){
+            type <- "entrezgene_id"
+          }else{
+            ad <- adist(as.character(possibleTypeIds[, 1]), type[1])
+            possibleType <- as.character(possibleTypeIds[which(ad==min(ad, na.rm = TRUE)), 1])
+            stop("Invalid type argument. Use the listFilters function to select a valid type argument.",
+                 paste("Do you mean", paste(possibleType, collapse = ", ")))
+          }
+        }
         protein <- getSequence(id = unique(as.character(IDs)),
                                type = type,
                                seqType = "peptide",
                                mart = mart)
+
         if (nrow(protein) < 1)
         {
             stop("Too few retrieved protein sequences from Ensembl Biomart.",
@@ -314,6 +327,9 @@ fetchSequence <-function(IDs,
         paste0(rep.int("?", downstreamOffset), collapse = '')
     peptide.guarded <-
         paste0(upstreamGuard, dat$peptide, downstreamGuard)
+    if(length(dat$anchorPos)==0){
+      stop("Cannot find any sequence by given anchors.")
+    }
     dat$upstream <-
         substr(peptide.guarded,
                dat$anchorPos,

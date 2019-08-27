@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.22.3
+-----------------------
+    o return errors when type of getSequence is not correct.
+    
 CHANGES IN VERSION 1.22.2
 -----------------------
     o Update documentation.
