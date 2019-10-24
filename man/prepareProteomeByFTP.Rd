@@ -42,9 +42,10 @@ proteome data from UniProt for a given organism of an NCBI taxonomy ID or
 species' scientific name, or by using peptide sequences in a fasta file.
 }
 \examples{
+\dontrun{
 ## Prepare an objecto of Proteome Class for a proteome from the UniProt database
-proteome <- prepareProteomeByFTP(source = "UniProt", species = "Homo sapiens")
-
+#' proteome <- prepareProteomeByFTP(source = "UniProt", species = "Homo sapiens")
+}
 ## Prepare an objecto of Proteome Class from a fasta file
 fasta <- system.file("extdata", "HUMAN.fasta", package="dagLogo")
 proteome <- prepareProteomeByFTP(source = NULL, species = "Homo sapiens", 

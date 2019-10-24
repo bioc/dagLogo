@@ -32,9 +32,10 @@
 #' @export
 #' @author Haibo Liu
 #' @examples 
+#' \dontrun{
 #' ## Prepare an objecto of Proteome Class for a proteome from the UniProt database
-#' proteome <- prepareProteomeByFTP(source = "UniProt", species = "Homo sapiens")
-#' 
+#' #' proteome <- prepareProteomeByFTP(source = "UniProt", species = "Homo sapiens")
+#' }
 #' ## Prepare an objecto of Proteome Class from a fasta file
 #' fasta <- system.file("extdata", "HUMAN.fasta", package="dagLogo")
 #' proteome <- prepareProteomeByFTP(source = NULL, species = "Homo sapiens", 

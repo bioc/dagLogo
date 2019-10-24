@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.23.5
+-----------------------
+    o add dontrun for prepareProteomeByFTP in case there is net connection issue.
+    
 CHANGES IN VERSION 1.23.4
 -----------------------
     o return errors when type of getSequence is not correct.
