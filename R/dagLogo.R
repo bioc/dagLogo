@@ -266,9 +266,8 @@ getGroupingSymbol <-function(groupingScheme = ls(envir = cachedEnv))
 #' @param alpha Alpha channel for transparency of low affinity letters.
 #' @importFrom grDevices dev.size
 #' @importFrom graphics plot.new
-#' @import motifStack
+#' @importFrom motifStack plotMotifLogoA
 #' @import grid
-#' @importFrom grImport2 pictureGrob 
 #'
 #' @return A sequence Logo is plotted without returned values.
 #' @export
@@ -361,12 +360,14 @@ dagLogo <- function(testDAUresults,
   } else 
   {
     symbols <- motifStack:::coloredSymbols(ncha, font, colset[rname], 
-                                           rname, alpha = alpha)
+                                           rname, alpha = alpha,
+                                           envir = .globalEnv)
     symbolsCache[[key]] <- symbols
     
     ## save symbolsCache to the environment variable for future use
     assign("tmp_motifStack_symbolsCache", symbolsCache, envir = .globalEnv)
   }
+  pictureGrob <- get("pictureGrob", envir = .globalEnv)
   
   dw <- ifelse(legend, 1 / (npos + 6), 1 / (npos + 2))
   
@@ -506,7 +507,7 @@ dagLogo <- function(testDAUresults,
         if (h > 0) {
           symid <- ifelse(heights[id1[i]] > 0, id[i], paste0(id[i], "_", alpha))
           grid.draw(
-            grImport2::pictureGrob(
+            pictureGrob(
               symbols[[symid]],
               x.pos,
               y.pos,

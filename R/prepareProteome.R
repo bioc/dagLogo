@@ -4,7 +4,6 @@
 #' @param fasta fasta file name or an object of AAStringSet
 #' @param species an character to assign the species of the proteome
 #' @param ... parameters could be passed to \link{prepareProteomeByFTP}.
-#' @import Biostrings
 #' @export
 #' @return an object of Proteome which contain protein sequence information.
 #' @author Jianhong Ou

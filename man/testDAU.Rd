@@ -4,8 +4,12 @@
 \alias{testDAU}
 \title{Differential usage test of amino acids or amino acid groups.}
 \usage{
-testDAU(dagPeptides, dagBackground, groupingScheme = ls(envir =
-  cachedEnv), bgNoise = NA)
+testDAU(
+  dagPeptides,
+  dagBackground,
+  groupingScheme = ls(envir = cachedEnv),
+  bgNoise = NA
+)
 }
 \arguments{
 \item{dagPeptides}{An object of Class \code{\link{dagPeptides-class}}.}

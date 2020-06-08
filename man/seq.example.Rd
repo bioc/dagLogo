@@ -4,7 +4,8 @@
 \name{seq.example}
 \alias{seq.example}
 \title{An object of \code{\link{dagPeptides-class}} representing acetylated lysine-containing peptides.}
-\format{An object of \code{\link{dagPeptides-class}} Class
+\format{
+An object of \code{\link{dagPeptides-class}} Class
   The format is: A list.
   
     *`data`: 'data.frame':    732 obs. of  7 variables
@@ -21,7 +22,8 @@
     *`peptide`: a character vector, peptide sequences
     *`anchor`: a character vector, anchor amino acid in the protein
     *`upstream`: a character vector, upstream peptides
-    *`downstream`: a character vector, downstream peptides}
+    *`downstream`: a character vector, downstream peptides
+}
 \usage{
 seq.example
 }

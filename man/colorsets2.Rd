@@ -4,8 +4,9 @@
 \alias{colorsets2}
 \title{retrieve color setting for logo visualization}
 \usage{
-colorsets2(colorScheme = c("null", "classic", "charge", "chemistry",
-  "hydrophobicity"))
+colorsets2(
+  colorScheme = c("null", "classic", "charge", "chemistry", "hydrophobicity")
+)
 }
 \arguments{
 \item{colorScheme}{A vector of length 1, the option could be 'null',

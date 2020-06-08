@@ -4,8 +4,14 @@
 \alias{buildZTestBackgroundModel}
 \title{Build a background model for Z-test.}
 \usage{
-buildZTestBackgroundModel(dagPeptides, matches, numSubsamples = 30L,
-  rand.seed = 1, testType = "ztest", replacement = FALSE)
+buildZTestBackgroundModel(
+  dagPeptides,
+  matches,
+  numSubsamples = 30L,
+  rand.seed = 1,
+  testType = "ztest",
+  replacement = FALSE
+)
 }
 \arguments{
 \item{dagPeptides}{An object of \code{\link{dagPeptides-class}} containing 

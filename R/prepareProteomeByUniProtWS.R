@@ -8,7 +8,7 @@
 #' @param fasta A fasta file name or an object of \code{\link{AAStringSet}}.
 #' @param species An character vector of length (1) to designate the species
 #' of the proteome
-#' @import Biostrings
+#' @importFrom Biostrings readAAStringSet
 #' @export
 #' @return An object of Proteome which contain protein sequence information.
 #' @author Jianhong Ou

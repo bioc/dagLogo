@@ -4,8 +4,14 @@
 \alias{prepareProteomeByFTP}
 \title{Create an object of \code{\link{Proteome}} Class.}
 \usage{
-prepareProteomeByFTP(source = "UniProt", taxonID = NULL,
-  species = NULL, destDir = tempdir(check = TRUE), fastaFile, ...)
+prepareProteomeByFTP(
+  source = "UniProt",
+  taxonID = NULL,
+  species = NULL,
+  destDir = tempdir(check = TRUE),
+  fastaFile,
+  ...
+)
 }
 \arguments{
 \item{source}{A character vector of length 1 or NULL. A database source from 

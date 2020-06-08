@@ -4,8 +4,11 @@
 \alias{addScheme}
 \title{Add a custom coloring or grouping scheme.}
 \usage{
-addScheme(color = vector("character"), symbol = vector("character"),
-  group = NULL)
+addScheme(
+  color = vector("character"),
+  symbol = vector("character"),
+  group = NULL
+)
 }
 \arguments{
 \item{color}{A named vector of character. This vector specifies

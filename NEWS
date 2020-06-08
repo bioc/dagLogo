@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.27.1
+-----------------------
+    o adjust the Depends, Imports and Suggests packages
+    
 CHANGES IN VERSION 1.23.5
 -----------------------
     o add dontrun for prepareProteomeByFTP in case there is net connection issue.

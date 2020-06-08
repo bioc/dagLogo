@@ -4,8 +4,7 @@
 \alias{nameHash}
 \title{convert group name to a single character}
 \usage{
-nameHash(nameScheme = c("classic", "charge", "chemistry",
-  "hydrophobicity"))
+nameHash(nameScheme = c("classic", "charge", "chemistry", "hydrophobicity"))
 }
 \arguments{
 \item{nameScheme}{could be "classic", "charge", "chemistry", "hydrophobicity"}

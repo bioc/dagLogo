@@ -4,11 +4,18 @@
 \alias{buildBackgroundModel}
 \title{Build background models for DAU tests}
 \usage{
-buildBackgroundModel(dagPeptides, background = c("wholeProteome",
-  "inputSet", "nonInputSet"), model = c("any", "anchored"),
+buildBackgroundModel(
+  dagPeptides,
+  background = c("wholeProteome", "inputSet", "nonInputSet"),
+  model = c("any", "anchored"),
   targetPosition = c("any", "Nterminus", "Cterminus"),
-  uniqueSeq = FALSE, numSubsamples = 300L, rand.seed = 1,
-  replacement = FALSE, testType = c("ztest", "fisher"), proteome)
+  uniqueSeq = FALSE,
+  numSubsamples = 300L,
+  rand.seed = 1,
+  replacement = FALSE,
+  testType = c("ztest", "fisher"),
+  proteome
+)
 }
 \arguments{
 \item{dagPeptides}{An object of \code{\link{dagPeptides-class}} containing 

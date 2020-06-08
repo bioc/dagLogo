@@ -30,6 +30,7 @@
 #' @import biomaRt
 #' @importFrom BiocGenerics start
 #' @importFrom utils adist
+#' @importFrom Biostrings AAString matchPattern
 #' @import methods
 #' @return An object of class \code{\link{dagPeptides-class}} 
 #' @export
