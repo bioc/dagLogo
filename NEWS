@@ -1,3 +1,8 @@
+CHANGES IN VERSION 1.27.2
+-----------------------
+    o add availableSchemes function.
+    o fix the x-axis.
+    
 CHANGES IN VERSION 1.27.1
 -----------------------
     o adjust the Depends, Imports and Suggests packages

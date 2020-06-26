@@ -5,7 +5,7 @@
 #'  Objects can be created by calls of the form 
 #'  
 #'  \code{new("dagPeptides", data, peptides, upstreamOffset, downstreamOffset, type)}.
-#' @slot data A data frame with columns names: IDs, anchorAA, anchorPos, peptide and anchor.
+#' @slot data A data frame with column names: IDs, anchorAA, anchorPos, peptide and anchor.
 #' @slot peptides A matrix of character, each element is a single-character symbol
 #' for a amino acid.
 #' @slot upstreamOffset An integer, the upstream offset
@@ -40,7 +40,7 @@ setClass(
         if (object@upstreamOffset < 0 ||
             object@downstreamOffset < 0)
             re <-
-                "upstreamOffset and downstreamOffset should be integers greater than 0."
+                "upstreamOffset and downstreamOffset should be integers no less than 0."
         peptides <- as.character(object@peptides)
         peptides <-
             peptides[(!is.na(peptides)) & (peptides != "NA")]
@@ -97,8 +97,8 @@ setClass(
 
 #' Class \code{dagBackground}.
 #' 
-#' An S4 class to represent a background composed of a formatted, aligned peptides for 
-#' dagLogo analysis.
+#' An S4 class to represent a background composed of a formatted, 
+#' aligned peptides for dagLogo analysis.
 #' 
 #' @slot background A list of data frame, each of which represetns 
 #' one subset of the background set. Within each n-by-1 dataframe is a the 

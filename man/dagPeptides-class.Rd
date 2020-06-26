@@ -13,7 +13,7 @@ An S4 class to represent formatted, aligned peptides for dagLogo analysis.
 \section{Slots}{
 
 \describe{
-\item{\code{data}}{A data frame with columns names: IDs, anchorAA, anchorPos, peptide and anchor.}
+\item{\code{data}}{A data frame with column names: IDs, anchorAA, anchorPos, peptide and anchor.}
 
 \item{\code{peptides}}{A matrix of character, each element is a single-character symbol
 for a amino acid.}

@@ -529,4 +529,17 @@ cachedEnv$contact_potential_Maiorov_group <- contact_potential_Maiorov_group
 cachedEnv$structure_alignments_Mirny_group <- structure_alignments_Mirny_group
 cachedEnv$sequence_alignment_Dayhoff_group <- sequence_alignment_Dayhoff_group
 
+#' Get all predefined coloring and grouping schemes
+#' @description List all predefined coloring and grouping schemes stored in 
+#' the environmetn `cacheEnv`
+#' 
+#' @return A vector of names of predefined coloring and grouping schemes 
+#' stored in the environment `cacheEnv`.
+#' @export
+#' @author Haibo Liu
+#' @keywords misc
+
+availableSchemes <- function(){
+  c(ls(envir = cachedEnv))
+}
 

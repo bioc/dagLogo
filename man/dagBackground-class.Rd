@@ -6,8 +6,8 @@
 \alias{dagBackground}
 \title{Class \code{dagBackground}.}
 \description{
-An S4 class to represent a background composed of a formatted, aligned peptides for 
-dagLogo analysis.
+An S4 class to represent a background composed of a formatted, 
+aligned peptides for dagLogo analysis.
 }
 \section{Slots}{
 
