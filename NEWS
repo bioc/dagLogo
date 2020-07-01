@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.27.3
+-----------------------
+    o fix the typo in dagLogo documentation.
+    
 CHANGES IN VERSION 1.27.2
 -----------------------
     o add availableSchemes function.

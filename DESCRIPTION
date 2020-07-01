@@ -1,7 +1,7 @@
 Package: dagLogo
 Type: Package
 Title: dagLogo: a bioconductor package for visualizeing conserved amino acid sequence pattern in groups based on probability theory
-Version: 1.27.2
+Version: 1.27.3
 Author: Jianhong Ou, Haibo Liu, Alexey Stukalov, Niraj Nirala, Usha Acharya, Lihua Julie Zhu
 Maintainer: Jianhong Ou <jianhong.ou@duke.edu>
 Description: Visualize significant conserved amino acid sequence pattern in groups based on probability theory.
@@ -13,8 +13,7 @@ Suggests: XML, grImport, grImport2, BiocStyle, knitr, rmarkdown,
     testthat
 biocViews: SequenceMatching, Visualization
 VignetteBuilder: knitr
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Encoding: UTF-8
 LazyLoad: yes
 LazyData: true
-

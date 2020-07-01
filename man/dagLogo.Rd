@@ -9,7 +9,7 @@ dagLogo(
   type = c("diff", "zscore"),
   pvalueCutoff = 0.05,
   groupingSymbol = getGroupingSymbol(testDAUresults@group),
-  font = "sans",
+  font = "Helvetica",
   fontface = "bold",
   fontsize = 5,
   title = NULL,
