@@ -22,7 +22,16 @@ prepareProteome <- function(source, fasta, species="unknown", ...){
     if(is(source, "UniProt.ws")){
       return(prepareProteomeByUniProtWS(UniProt.ws=source, species=species))
     }else{
-      return(prepareProteomeByFTP(source = "UniProt", species = species, ...))
+      res <- lapply(species, function(.ele){
+        prepareProteomeByFTP(source = "UniProt", species = .ele, ...)
+      })
+      prot <- res[[1]]
+      if(length(res)>1){
+        prot@proteome <- 
+          do.call(rbind, lapply(res, function(.ele) .ele@proteome))
+        prot@species <- species
+      }
+      return(prot)
     }
   }else{
     if(!missing(fasta)){

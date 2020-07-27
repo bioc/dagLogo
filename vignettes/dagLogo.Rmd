@@ -153,7 +153,8 @@ Similarly, peptide sequences can be fetched from an object of Proteome.
 ```{r formatSequence, results='hide'}
 dat <- unlist(read.delim(system.file("extdata", "grB.txt", package = "dagLogo"),
                         header = F, as.is = TRUE))
-##prepare proteome from a fasta file
+##prepare proteome from a fasta file, 
+##the fastq file is subset of human proteome for this vignette. 
 proteome <- prepareProteome(fasta = system.file("extdata",
                                                 "HUMAN.fasta",
                                                 package = "dagLogo"), 
