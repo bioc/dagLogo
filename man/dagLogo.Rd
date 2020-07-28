@@ -4,12 +4,20 @@
 \alias{dagLogo}
 \title{Create sequence logo.}
 \usage{
-dagLogo(testDAUresults, type = c("diff", "zscore"),
+dagLogo(
+  testDAUresults,
+  type = c("diff", "zscore"),
   pvalueCutoff = 0.05,
   groupingSymbol = getGroupingSymbol(testDAUresults@group),
-  font = "Helvetica", fontface = "bold", fontsize = 5,
-  title = NULL, legend = FALSE, labelRelativeToAnchor = FALSE,
-  labels = NULL, alpha = 1)
+  font = "Helvetica",
+  fontface = "bold",
+  fontsize = 5,
+  title = NULL,
+  legend = FALSE,
+  labelRelativeToAnchor = FALSE,
+  labels = NULL,
+  alpha = 1
+)
 }
 \arguments{
 \item{testDAUresults}{An object of \code{\link{testDAUresults-class}}, which

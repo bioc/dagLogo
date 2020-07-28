@@ -4,8 +4,16 @@
 \alias{fetchSequence}
 \title{Fetch protein/peptide sequences and create a \code{\link{dagPeptides-class}} object.}
 \usage{
-fetchSequence(IDs, type = "entrezgene", anchorAA = NULL, anchorPos,
-  mart, proteome, upstreamOffset, downstreamOffset)
+fetchSequence(
+  IDs,
+  type = "entrezgene",
+  anchorAA = NULL,
+  anchorPos,
+  mart,
+  proteome,
+  upstreamOffset,
+  downstreamOffset
+)
 }
 \arguments{
 \item{IDs}{A character vector containing protein/peptide IDs used to fetch 

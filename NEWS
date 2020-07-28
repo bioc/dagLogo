@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.26.2
+-----------------------
+    o allow multiple species in prepareProteome
+    
 CHANGES IN VERSION 1.23.5
 -----------------------
     o add dontrun for prepareProteomeByFTP in case there is net connection issue.

@@ -5,7 +5,8 @@
 \alias{ecoli.proteome}
 \title{An object of \code{\link{Proteome-class}} representing the 
 \emph{Escherichia coli} proteome.}
-\format{An object of  \code{\link{Proteome-class}} for Escherichia coli proteome. 
+\format{
+An object of  \code{\link{Proteome-class}} for Escherichia coli proteome. 
 The format is: A list with one data frame and an character.
 
 *`proteome`: 'data.frame':    13780 obs. of  4 variables
@@ -16,7 +17,8 @@ The format of proteome is
 *`ENTREZ_GENE`: a character vector, records entrez gene id
 *`SEQUENCE`: a character vector, peptide sequences
 *`ID`: a character vector, Uniprot ID
-*`LEN`: a character vector, length of peptides}
+*`LEN`: a character vector, length of peptides
+}
 \source{
 \url{http://www.uniprot.org/}
 }
