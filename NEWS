@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.27.6
+-----------------------
+    o add markers for logo.
+    
 CHANGES IN VERSION 1.27.5
 -----------------------
     o allow multiple species for prepareProteome.

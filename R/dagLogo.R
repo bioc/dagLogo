@@ -241,6 +241,66 @@ getGroupingSymbol <-function(groupingScheme = ls(envir = cachedEnv))
 }
 
 
+#' @importFrom grid gList rectGrob textGrob linesGrob
+plotMarkers <- function(markers, dw, x0, h, lo=NULL){
+  do.call(gList, lapply(markers, function(m){
+    switch(m@type,
+           "rect"={
+             pos <- mapply(seq, m@start, m@stop, SIMPLIFY = FALSE)
+             if(length(lo)>0 && length(lo)==length(h)){
+               height <- sapply(pos, function(.ele) max(h[.ele])-min(lo[.ele]))
+               y <- sapply(pos, function(.ele) (min(lo[.ele])+max(h[.ele]))/2)
+             }else{
+               height <- sapply(pos, function(.ele) max(h[.ele]))
+               y <- height/2
+             }
+             res <- rectGrob(x= x0+(m@start + m@stop-1)*dw/2,
+                             y = y,
+                             width = dw*(m@stop - m@start + 1),
+                             height = height, 
+                             gp = m@gp)
+             if(any(nchar(m@label)>0)){
+               tG <- textGrob(label=m@label,
+                              x = x0+(m@start+m@stop-1)*dw/2,
+                              y = height,
+                              vjust = -.5,
+                              gp = m@gp)
+               res <- gList(res, tG)
+             }
+             res
+           },
+           "text"={
+             pos <- mapply(seq, m@start, m@stop, SIMPLIFY = FALSE)
+             label <- rep(m@label, lengths(pos))
+             pos <- unlist(pos)
+             textGrob(label=label,
+                      x = x0+(pos-.5)*dw, 
+                      y = h[pos],
+                      vjust = -0.1,
+                      gp = m@gp)
+           },
+           "line"={
+             pos <- mapply(seq, m@start, m@stop, SIMPLIFY = FALSE)
+             height <- sapply(pos, function(.ele) max(h[.ele]))
+             res <- segmentsGrob(x0 = x0+(m@start-1)*dw, 
+                                 x1 = x0+m@stop*dw,
+                                 y0 = height,
+                                 y1 = height,
+                                 gp = m@gp)
+             if(any(nchar(m@label)>0)){
+               tG <- textGrob(label=m@label,
+                              x = x0+(m@start+m@stop-1)*dw/2,
+                              y = height,
+                              vjust = -.5,
+                              gp = m@gp)
+               res <- gList(res, tG)
+             }
+             res
+           })
+  }))
+}
+
+
 #' Create sequence logo.
 #' 
 #' Create sequence logo for visualizing results of testing differential usage 
@@ -263,9 +323,11 @@ getGroupingSymbol <-function(groupingScheme = ls(envir = cachedEnv))
 #' @param fontface An integer, fontface of text for axis annotation and legends.
 #' @param fontsize An integer, fontsize of text for axis annotation and legends.
 #' @param alpha Alpha channel for transparency of low affinity letters.
+#' @param markers A list of \link[motifStack]{marker-class}.
 #' @importFrom grDevices dev.size
 #' @importFrom graphics plot.new
 #' @importFrom motifStack plotMotifLogoA
+#' @importClassesFrom motifStack marker
 #' @import grid
 #'
 #' @return A sequence Logo is plotted without returned values.
@@ -286,7 +348,10 @@ getGroupingSymbol <-function(groupingScheme = ls(envir = cachedEnv))
 #'              groupingScheme = "chemistry_property_Mahler")
 #' t4 <- testDAU(dagPeptides = seq.example, dagBackground = bg, 
 #'               groupingScheme = "hydrophobicity_KD_group")
-#' dagLogo(t0)
+#' dagLogo(t0, markers = list(new("marker", type="rect", start=c(5, 8), 
+#'                                 gp=gpar(lty=3, fill=NA)),
+#'                             new("marker", type="text", start=9, label="*", 
+#'                                 gp=gpar(col=3))))
 #' dagLogo(t1, groupingSymbol = getGroupingSymbol(t1@group))
 #' dagLogo(t2, groupingSymbol = getGroupingSymbol(t2@group))
 #' dagLogo(t3, groupingSymbol = getGroupingSymbol(t3@group))
@@ -303,7 +368,8 @@ dagLogo <- function(testDAUresults,
                     title = NULL,
                     legend = FALSE,
                     labelRelativeToAnchor = FALSE,
-                    labels = NULL, alpha=1) 
+                    labels = NULL, alpha=1,
+                    markers = list()) 
 {
   if (missing(testDAUresults) || class(testDAUresults) != "testDAUresults") 
   {
@@ -455,6 +521,9 @@ dagLogo <- function(testDAUresults,
   )
   
   x.pos <- x0 + dw / 2
+  ## save y position for markers
+  y.poss <- numeric(length=npos) 
+  y.low.poss <- numeric(length=npos)
   
   for (j in 1:npos) 
   {
@@ -465,7 +534,7 @@ dagLogo <- function(testDAUresults,
       id[id %in% which(testDAUresults@pvalue[, j] < pvalueCutoff)]
     id1 <- order(heights)
     y.pos <- remap(sum(heights[heights < 0]))
-    
+    y.low.poss[j] <- y.pos
     flag <- 0
     
     x_tick <- j
@@ -480,7 +549,7 @@ dagLogo <- function(testDAUresults,
     
     if (length(heights) > 0)
     {
-      for (i in 1:length(heights)) 
+      for (i in seq.int(length(heights))) 
       {
         h <- reheight(heights[id1[i]])
         if (heights[id1[i]] > 0)
@@ -520,7 +589,7 @@ dagLogo <- function(testDAUresults,
         }
       }
     }
-    
+    y.poss[j] <- y.pos
     ## plot x-axis tick labels
     if (flag == 0)
     {
@@ -530,8 +599,13 @@ dagLogo <- function(testDAUresults,
                 just = c(.5, .5),
                 gp = gpar(fontsize=fontsize * 0.8, 
                           fontface = fontface))
-    }    
+    }
     x.pos <- x.pos + dw
+  }
+  
+  ## plot markers
+  if(length(markers)>0){
+    grid.draw(plotMarkers(markers, dw, x0+dw/2, y.poss, y.low.poss))
   }
   
   if (!is.null(title))

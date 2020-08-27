@@ -16,7 +16,8 @@ dagLogo(
   legend = FALSE,
   labelRelativeToAnchor = FALSE,
   labels = NULL,
-  alpha = 1
+  alpha = 1,
+  markers = list()
 )
 }
 \arguments{
@@ -48,6 +49,8 @@ x-axis label should be adjusted relative to the anchoring position.}
 \item{labels}{A character vector, x-axis labels.}
 
 \item{alpha}{Alpha channel for transparency of low affinity letters.}
+
+\item{markers}{A list of \link[motifStack]{marker-class}.}
 }
 \value{
 A sequence Logo is plotted without returned values.
@@ -70,7 +73,10 @@ t3 <- testDAU(dagPeptides = seq.example, dagBackground = bg,
              groupingScheme = "chemistry_property_Mahler")
 t4 <- testDAU(dagPeptides = seq.example, dagBackground = bg, 
               groupingScheme = "hydrophobicity_KD_group")
-dagLogo(t0)
+dagLogo(t0, markers = list(new("marker", type="rect", start=c(5, 8), 
+                                gp=gpar(lty=3, fill=NA)),
+                            new("marker", type="text", start=9, label="*", 
+                                gp=gpar(col=3))))
 dagLogo(t1, groupingSymbol = getGroupingSymbol(t1@group))
 dagLogo(t2, groupingSymbol = getGroupingSymbol(t2@group))
 dagLogo(t3, groupingSymbol = getGroupingSymbol(t3@group))
