@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.27.7
+-----------------------
+    o optimize the label position of markers for logo.
+    
 CHANGES IN VERSION 1.27.6
 -----------------------
     o add markers for logo.

@@ -250,8 +250,10 @@ plotMarkers <- function(markers, dw, x0, h, lo=NULL){
              if(length(lo)>0 && length(lo)==length(h)){
                height <- sapply(pos, function(.ele) max(h[.ele])-min(lo[.ele]))
                y <- sapply(pos, function(.ele) (min(lo[.ele])+max(h[.ele]))/2)
+               h2 <- sapply(pos, function(.ele) max(h[.ele]))
              }else{
                height <- sapply(pos, function(.ele) max(h[.ele]))
+               h2 <- height
                y <- height/2
              }
              res <- rectGrob(x= x0+(m@start + m@stop-1)*dw/2,
@@ -262,7 +264,7 @@ plotMarkers <- function(markers, dw, x0, h, lo=NULL){
              if(any(nchar(m@label)>0)){
                tG <- textGrob(label=m@label,
                               x = x0+(m@start+m@stop-1)*dw/2,
-                              y = height,
+                              y = h2,
                               vjust = -.5,
                               gp = m@gp)
                res <- gList(res, tG)
@@ -463,6 +465,12 @@ dagLogo <- function(testDAUresults,
   ylim <-
     c((as.integer(min(datN) / 0.05) - 1) * 0.05, 
       (as.integer(max(datP) / 0.05) + 1) * 0.05)
+  
+  if(length(markers)>0){## leave space in top for marker labels.
+    if(any(sapply(markers, function(.ele) any(nchar(.ele@label)>0)))){
+      ylim[2] <- (as.integer(max(datP) / 0.05) + 2) * 0.05
+    }
+  }
   
   remap <- function(x) {
     (ylim[1] - x) / (ylim[1] - ylim[2]) / (1 + dw)

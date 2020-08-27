@@ -148,7 +148,7 @@ if(interactive()){
 Similarly, peptide sequences can be fetched from an object of Proteome.  
   
   
-### Case 3: Prepare an object of `dagPeptides` using `prepareProteome` and `formatSequence` functions sequentially given a list of unaligned/aligned peptide sequences.
+### Case 3: Prepare an object of `dagPeptides` using `prepareProteome` and `formatSequence` functions sequentially given a list of unaligned/aligned ungapped peptide sequences.
 
 ```{r formatSequence, results='hide'}
 dat <- unlist(read.delim(system.file("extdata", "grB.txt", package = "dagLogo"),
