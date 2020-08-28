@@ -366,7 +366,7 @@ dagLogo <- function(testDAUresults,
                     groupingSymbol = getGroupingSymbol(testDAUresults@group),
                     font = "Helvetica",
                     fontface = "bold",
-                    fontsize = 5,
+                    fontsize = 8,
                     title = NULL,
                     legend = FALSE,
                     labelRelativeToAnchor = FALSE,
@@ -437,6 +437,15 @@ dagLogo <- function(testDAUresults,
     ## save symbolsCache to the environment variable for future use
     assign("tmp_motifStack_symbolsCache", symbolsCache, envir = .globalEnv)
   }
+  if (legend) 
+  {
+    if (is.null(groupingSymbol)) 
+    {
+      groupingSymbol <- get(testDAUresults@group, envir = cachedEnv)$symbol
+    }
+  }else{
+    groupingSymbol <- c("WWWW"="W")
+  }
   pictureGrob <- get("pictureGrob", envir = .globalEnv)
   
   dw <- ifelse(legend, 1 / (npos + 6), 1 / (npos + 2))
@@ -445,14 +454,6 @@ dagLogo <- function(testDAUresults,
   ## plot.new()  ## This doesn't refresh the setting for the new page of 
   ##                the grid graphics system
   grid.newpage()  ## update the plotting frame for the grid graphics system
-  line1 <-
-    as.numeric(convertUnit(unit(1, "strwidth", "W"), "npc"))
-  cex <- dw / line1
-  lwd <- cex / 3
-  x0 <- dw
-  x1 <- 4 / 5 * dw
-  x2 <- 6 / 5 * dw
-  x3 <- 1 / 5 * dw
   ##set ylim
   ## below x-axis
   datN <- apply(dat, 2, function(.col)
@@ -478,6 +479,30 @@ dagLogo <- function(testDAUresults,
   reheight <- function(x) {
     abs(x / (ylim[1] - ylim[2]) / (1 + dw))
   }
+  
+  line1 <-
+    as.numeric(convertUnit(unit(1, "strwidth", "W"), "npc"))
+  ch1 <- convertUnit(grobWidth(textGrob(label = "A",
+                                        gp = gpar(fontsize=fontsize, 
+                                                  fontface = fontface))),
+                     unitTo = "npc", valueOnly = TRUE)
+  cex <- dw / line1
+  lwd <- cex / 3
+  x0 <- convertUnit(grobWidth(textGrob(label = as.character(max(ylim)),
+                                       gp = gpar(fontsize=fontsize, 
+                                                 fontface = fontface))),
+                    unitTo = "npc", valueOnly = TRUE)
+  if(x0>dw){
+    dw <- ifelse(legend, 1 / (npos + 1 + (x0 + 2*ch1)/dw + 
+                                ch1*(max(nchar(names(groupingSymbol)))+2)/dw), 
+                 1 / (npos + 1 + (x0 + 2*ch1)/dw))
+  }else(
+    x0 <- dw
+  )
+  x1 <- 4 / 5 * x0 + 2*ch1
+  x2 <- 6 / 5 * x0 + 2*ch1
+  x3 <- ch1 * 3 / 4
+  x0 <- x0 + 2*ch1
   
   ##draw axis
   x.pos <- 0
@@ -635,23 +660,30 @@ dagLogo <- function(testDAUresults,
     {
       groupingSymbol <- get(testDAUresults@group, envir = cachedEnv)$symbol
     }
+    curH <- 0
+    curX <- npos*dw + x0 + 2.25*ch1
     for (i in 1:length(groupingSymbol)) 
     {
-      grid.text(
+      t1 <- textGrob(
         groupingSymbol[i],
-        x = (npos+2)*dw,
-        y = .95 - i * 0.1 * fontsize/20,
+        x = curX,
+        y = .95 - curH,
         just = c(.5, .5),
         gp = gpar(col = colset[groupingSymbol[i]], 
                   fontsize=fontsize, 
                   fontface = fontface))
-      grid.text(
+      grid.draw(t1)
+      t2 <- textGrob(
         names(groupingSymbol)[i],
-        x = (npos+2)*dw + 0.1 * fontsize/20,
-        y = .95 - i * 0.1 * fontsize/20,
+        x = curX + 1.2*line1,
+        y = .95 - curH,
         just = c(0, .5),
         gp = gpar(col = colset[groupingSymbol[i]], fontsize=fontsize, 
                   fontface = fontface))
+      grid.draw(t2)
+      curH <- curH + convertHeight(grobHeight(t1), 
+                                   unitTo = "npc", 
+                                   valueOnly = TRUE)*1.5
     }
   }
 }

@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.27.8
+-----------------------
+    o add adjust p-value for testDAU function.
+    
 CHANGES IN VERSION 1.27.7
 -----------------------
     o optimize the label position of markers for logo.

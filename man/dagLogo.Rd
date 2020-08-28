@@ -11,7 +11,7 @@ dagLogo(
   groupingSymbol = getGroupingSymbol(testDAUresults@group),
   font = "Helvetica",
   fontface = "bold",
-  fontsize = 5,
+  fontsize = 8,
   title = NULL,
   legend = FALSE,
   labelRelativeToAnchor = FALSE,

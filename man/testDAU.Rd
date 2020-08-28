@@ -8,7 +8,8 @@ testDAU(
   dagPeptides,
   dagBackground,
   groupingScheme = ls(envir = cachedEnv),
-  bgNoise = NA
+  bgNoise = NA,
+  method = "none"
 )
 }
 \arguments{
@@ -34,6 +35,12 @@ color AAs based on similarities or group amino acids into groups of similarities
 
 \item{bgNoise}{A numeric vector of length 1 if not NA. It should be in 
 the interval of (0, 1) when not NA.}
+
+\item{method}{A character vector of length 1, specifying the method
+used for p-value adjustment to correct for multiple testing. it can be 
+"holm", "hochberg", "hommel","bonferroni", "BH", "BY", "fdr", or "none".
+For more details, see \code{\link[stats]{p.adjust.methods}} and 
+\code{\link[stats]{p.adjust}}.}
 }
 \value{
 An object of Class \code{\link{testDAUresults-class}}.
@@ -60,8 +67,9 @@ bg_fisher <- buildBackgroundModel(seq, background = "wholeProteome",
 bg_ztest <- buildBackgroundModel(seq, background = "wholeProteome",
                                    proteome = proteome, testType = "ztest")
 
-## no grouping and distinct coloring scheme
-t0 <- testDAU(seq, dagBackground = bg_ztest)
+## no grouping and distinct coloring scheme, adjust p-values using the 
+## "BH" method.
+t0 <- testDAU(seq, dagBackground = bg_ztest, method = "BY")
 
 ## grouped by polarity index (Granthm, 1974)
 t1 <- testDAU(dagPeptides = seq, dagBackground = bg_ztest, 
@@ -77,7 +85,7 @@ t3 <- testDAU(dagPeptides = seq, dagBackground = bg_ztest,
               
 ## grouped on the basis of hydrophobicity (Kyte and Doolittle, 1982)
 t4 <- testDAU(dagPeptides = seq, dagBackground = bg_ztest, 
-              groupingScheme = "hydrophobicity_KD_group")                                   
+              groupingScheme = "hydrophobicity_KD_group") 
 }
 \author{
 Jianhong Ou, Haibo Liu

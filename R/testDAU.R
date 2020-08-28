@@ -27,10 +27,10 @@
 #'    EDNQKRH = c("E", "D", "N", "Q", "K", "R", "H"))
 #' addScheme(color = color, symbol = symbol, group = group) 
 #' 
- 
+
 addScheme <- function(color = vector("character"), 
-                     symbol = vector("character"),
-                     group = NULL)
+                      symbol = vector("character"),
+                      group = NULL)
 {
     if(!is.null(group))
     {
@@ -87,9 +87,15 @@ addScheme <- function(color = vector("character"),
 #' 
 #' @param bgNoise A numeric vector of length 1 if not NA. It should be in 
 #' the interval of (0, 1) when not NA.
+#' 
+#' @param method A character vector of length 1, specifying the method
+#' used for p-value adjustment to correct for multiple testing. it can be 
+#' "holm", "hochberg", "hommel","bonferroni", "BH", "BY", "fdr", or "none".
+#' For more details, see \code{\link[stats]{p.adjust.methods}} and 
+#' \code{\link[stats]{p.adjust}}.
 #'
 #' @return An object of Class \code{\link{testDAUresults-class}}.
-#' @importFrom stats pnorm rgamma sd fisher.test
+#' @importFrom stats pnorm rgamma sd fisher.test p.adjust p.adjust.methods
 #' @import methods
 #' @export
 #' @author Jianhong Ou, Haibo Liu
@@ -111,8 +117,9 @@ addScheme <- function(color = vector("character"),
 #' bg_ztest <- buildBackgroundModel(seq, background = "wholeProteome",
 #'                                    proteome = proteome, testType = "ztest")
 #' 
-#' ## no grouping and distinct coloring scheme
-#' t0 <- testDAU(seq, dagBackground = bg_ztest)
+#' ## no grouping and distinct coloring scheme, adjust p-values using the 
+#' ## "BH" method.
+#' t0 <- testDAU(seq, dagBackground = bg_ztest, method = "BY")
 #' 
 #' ## grouped by polarity index (Granthm, 1974)
 #' t1 <- testDAU(dagPeptides = seq, dagBackground = bg_ztest, 
@@ -128,25 +135,26 @@ addScheme <- function(color = vector("character"),
 #'               
 #' ## grouped on the basis of hydrophobicity (Kyte and Doolittle, 1982)
 #' t4 <- testDAU(dagPeptides = seq, dagBackground = bg_ztest, 
-#'               groupingScheme = "hydrophobicity_KD_group")                                   
+#'               groupingScheme = "hydrophobicity_KD_group") 
 
 
 testDAU <- function(dagPeptides,
                     dagBackground,
                     groupingScheme = ls(envir = cachedEnv),
-                    bgNoise = NA) 
+                    bgNoise = NA,
+                    method = "none") 
 {
     if (missing(dagPeptides) || class(dagPeptides) != "dagPeptides") 
     {
         stop("dagPeptides should be an object of dagPeptides class.\n
             Please try ?fetchSequence to get help.",
-            call. = FALSE)
+             call. = FALSE)
     }
     if (missing(dagBackground) || class(dagBackground) != "dagBackground") 
     {
         stop("dagBackground should be an object of dagBackground class .\n
             Please try ?buildBackgroundModel to get help.",
-            call. = FALSE)
+             call. = FALSE)
     }
     if (!is.na(bgNoise)) 
     {
@@ -156,7 +164,8 @@ testDAU <- function(dagPeptides,
                  call. = FALSE)
         }
     }
-
+    pmethod <- match.arg(method, p.adjust.methods, several.ok = FALSE)
+    
     exp <- dagPeptides@peptides
     bg <- dagBackground@background
     
@@ -192,7 +201,7 @@ testDAU <- function(dagPeptides,
     {
         if (grepl("group", group))
         {
-           dat <- convert(dat, get(group, envir = cachedEnv)$group)
+            dat <- convert(dat, get(group, envir = cachedEnv)$group)
         }
         dat
     }
@@ -220,12 +229,12 @@ testDAU <- function(dagPeptides,
     }
     ## a list of list
     bg <- lapply(bg, counts, coln, testType = testType)
- 
+    
     ## a list
     exp <- counts(exp, coln, testType = testType)
     ## get frequency of each amino acid at each position
     exp_freq <- do.call(cbind, lapply(exp, function(.ele){
-       .ele$freq
+        .ele$freq
     }))
     exp_freq[is.na(exp_freq)] <- 0
     ## get percentage of each amino acid at each position
@@ -239,13 +248,13 @@ testDAU <- function(dagPeptides,
     if(testType == "z-test")
     {
         per_sample_bg_percent <- lapply(bg, function(.bg) {
-                do.call(cbind, lapply(.bg, function(.ele){
-                    .ele$percent
-                }))
-            })
+            do.call(cbind, lapply(.bg, function(.ele){
+                .ele$percent
+            }))
+        })
         per_position_bg_percent <- lapply(1:ncol(exp_percent),function(i) {
             do.call(cbind, lapply(per_sample_bg_percent, function(.ele){
-            .ele[, i]
+                .ele[, i]
             }))
         })
         
@@ -285,7 +294,7 @@ testDAU <- function(dagPeptides,
         mu_percent <- do.call(cbind, lapply(bg, function(.ele){
             .ele$percent
         }))
-
+        
         diff_percent <- exp_percent - mu_percent
         
         ## Fisher exact test
@@ -304,7 +313,7 @@ testDAU <- function(dagPeptides,
         statistics <- matrix(testOut$statistics, nrow = nrow(exp_percent), byrow =FALSE)
     }
     rownames(diff_percent) <- rownames(pvalue) <- rownames(statistics) <- coln
-   
+    
     coln <- c()
     if (dagPeptides@upstreamOffset > 0) 
     {
@@ -324,7 +333,16 @@ testDAU <- function(dagPeptides,
         coln <- paste("AA", 1:ncol(diff_percent), sep = "")
         colnames(diff_percent) <- colnames(statistics) <- colnames(pvalue) <- coln
     }
-
+    
+    ## adjust p-values
+    if (pmethod != "none")
+    {
+        pvalue[] <- do.call("cbind", 
+                            lapply(as.data.frame(pvalue),
+                                   function(.x){
+                                       p.adjust(p = .x, method = pmethod)})) 
+    }
+    
     ## return the test results as an object of testDAUresults Class
     new("testDAUresults",
         group = groupingScheme,
