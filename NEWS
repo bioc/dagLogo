@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.27.9
+-----------------------
+    o update the hyperlink of p.adjust.methods in documentation.
+    
 CHANGES IN VERSION 1.27.8
 -----------------------
     o add adjust p-value for testDAU function.

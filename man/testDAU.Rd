@@ -39,7 +39,7 @@ the interval of (0, 1) when not NA.}
 \item{method}{A character vector of length 1, specifying the method
 used for p-value adjustment to correct for multiple testing. it can be 
 "holm", "hochberg", "hommel","bonferroni", "BH", "BY", "fdr", or "none".
-For more details, see \code{\link[stats]{p.adjust.methods}} and 
+For more details, see \code{\link[stats:p.adjust]{p.adjust.methods}} and 
 \code{\link[stats]{p.adjust}}.}
 }
 \value{
