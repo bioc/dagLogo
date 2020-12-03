@@ -1,3 +1,7 @@
+CHANGES IN VERSION 1.29.1
+-----------------------
+    o add citation.
+    
 CHANGES IN VERSION 1.27.9
 -----------------------
     o update the hyperlink of p.adjust.methods in documentation.

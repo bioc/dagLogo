@@ -1,0 +1,15 @@
+citHeader("Please cite the paper below for the dagLogo package.")
+
+citEntry(entry="Article",
+	title="dagLogo: An R/Bioconductor package for identifying and visualizing differential amino acid group usage in proteomics data",
+	author="Ou, Jianhong and Liu, Haibo and Nirala, Niraj K and Stukalov, Alexey and Acharya, Usha and Green, Michael R and Zhu, Lihua Julie",
+	journal="Plos one",
+	volume=15,
+	year=2020,
+	number=11,
+	pages="e0242030",
+	url="https://doi.org/10.1371/journal.pone.0242030",
+	doi="10.1371/journal.pone.0242030",
+	publisher="Public Library of Science San Francisco, CA USA",
+	textVersion="Ou J, Liu H, Nirala N K, et al. dagLogo: An R/Bioconductor package for identifying and visualizing differential amino acid group usage in proteomics data[J]. Plos one, 2020, 15(11): e0242030."
+)
