@@ -169,7 +169,7 @@ fetchSequence <-function(IDs,
    
     searchAnchor <- FALSE
     anchor <- anchorPos
-    if (class(anchorPos) == "character") 
+    if (is(anchorPos, "character"))
     {
         ## removing leading and trailing "-"
         anchorPos <- gsub("^\\-+", "", anchorPos)

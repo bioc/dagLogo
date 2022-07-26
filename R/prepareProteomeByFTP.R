@@ -27,7 +27,7 @@
 #' @importFrom UniProt.ws availableUniprotSpecies lookupUniprotSpeciesFromTaxId
 #' @import methods
 #' @importFrom Biostrings readAAStringSet
-#' @importFrom utils download.file
+#' @importFrom utils download.file read.table
 #' @importFrom httr GET content status_code
 #' @return An object of Proteome
 #' @export
