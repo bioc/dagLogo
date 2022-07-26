@@ -19,10 +19,10 @@ which the proteome sequences are to be downloaded. By default, currently it is
 "UniProt". If it is NULL, then \code{fastaFile} has to be specified. The 
 priority of \code{source} is higher than \code{fastaFile}.}
 
-\item{taxonID}{Taxonomy ID for a species of interest. Check the NCBI
-taxonomy database: \url{https://www.ncbi.nlm.nih.gov/taxonomy} or 
-the UniProt database \url{http://www.uniprot.org/taxonomy/}. At least one of 
-the two parameters, \code{taxonID} and \code{species}, should be specified. 
+\item{taxonID}{An integer(1), specifying Taxonomy ID for a species of interest.
+Check the NCBI taxonomy database: \url{https://www.ncbi.nlm.nih.gov/taxonomy} 
+or the UniProt database \url{http://www.uniprot.org/taxonomy/}. At least one 
+of the two parameters, \code{taxonID} and \code{species}, should be specified. 
 If both are specified, \code{taxonID} will be used preferentially.}
 
 \item{species}{A character vector of length 1. The Latin name of a species 
