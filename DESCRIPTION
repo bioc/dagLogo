@@ -1,10 +1,16 @@
 Package: dagLogo
 Type: Package
 Title: dagLogo: a Bioconductor package for visualizing conserved amino acid sequence pattern in groups based on probability theory
-Version: 1.51.0
-Author: Jianhong Ou, Haibo Liu, Alexey Stukalov, Niraj Nirala, Usha Acharya, Lihua Julie Zhu
-Maintainer: Jianhong Ou <jou@morgridge.org>
-Description: Visualize significant conserved amino acid sequence pattern in groups based on probability theory.
+Version: 1.51.1
+Authors@R: c(person(given="Jianhong", family="Ou", email="jou@morgridge.org", 
+        role=c("aut", "cre"), comment=c(ORCID="0000-0002-8652-2488")), 
+        person(given="Haibo", family="Liu", role="aut"), 
+        person(given="Alexey", family="Stukalov", role="ctr"), 
+        person(given="Niraj", family="Nirala", role="ctr"),
+        person(given="Usha", family="Acharya", role="ctr"),
+        person(given="Julie Lihua", family="Zhu", 
+        role="aut", email="Julie.Zhu@umassmed.edu"))
+Description: Visualize significant conserved amino acid sequence pattern in groups based on probability theory. The package allows aligned or not aligned subsequences of different length as input. Both significantly over- and under-represented amino acid residues can be plotted. AA residues can be grouped and statistical significance test can be performed at the group level. 
 License: GPL (>=2)
 Depends: R (>= 3.0.1), methods, grid
 Imports: pheatmap, Biostrings, UniProt.ws, BiocGenerics, 
@@ -13,7 +19,7 @@ Suggests: XML, grImport, grImport2, BiocStyle, knitr, rmarkdown,
     testthat
 biocViews: SequenceMatching, Visualization
 VignetteBuilder: knitr
-RoxygenNote: 7.2.1
 Encoding: UTF-8
 LazyLoad: yes
 LazyData: true
+Config/roxygen2/version: 8.1.1

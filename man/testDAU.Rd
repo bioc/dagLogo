@@ -62,6 +62,7 @@ proteome <- prepareProteome(fasta = system.file("extdata",
 ##prepare an object of dagPeptides Class
 seq <- formatSequence(seq = dat, proteome = proteome, upstreamOffset = 14,
                      downstreamOffset = 15)
+set.seed(42)
 bg_fisher <- buildBackgroundModel(seq, background = "wholeProteome",
                                   proteome = proteome, testType = "fisher")
 bg_ztest <- buildBackgroundModel(seq, background = "wholeProteome",

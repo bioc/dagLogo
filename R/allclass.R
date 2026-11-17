@@ -22,7 +22,7 @@
 #' @aliases dagPeptides
 #' @exportClass dagPeptides
 #' @import methods
-#' 
+#' @return An object of class \code{dagPeptides}
 #' @author Jianhong Ou
 
 
@@ -51,6 +51,22 @@ setClass(
     }
 )
 
+#' @rdname dagPeptides-class
+#' @param object an object of dagPeptides.
+#' @exportMethod show
+#' @importFrom utils head
+#' @aliases show,dagPeptides-method
+setMethod("show", "dagPeptides", function(object){
+  cat("This is an object of dagPeptides\n", 
+      "type:", object@type, "\n", 
+      "upstreamOffset:", object@upstreamOffset, "\n",
+      "downstreamOffset:", object@format, "\n")
+  cat("peptides:\n")
+  show(object@peptides)
+  cat("head of data:\n")
+  head(object@data, n=3)
+})
+
 #' Class \code{\link{Proteome}}.
 #' 
 #' An S4 class to represent a whole proteome for dagLogo analysis.
@@ -71,6 +87,7 @@ setClass(
 #' @exportClass Proteome
 #' 
 #' @import methods
+#' @return An object of class \code{dagPeptides}
 #' 
 #' @author Jianhong Ou
 
@@ -95,6 +112,19 @@ setClass(
     }
 )
 
+#' @rdname Proteome-class
+#' @param object an object of Proteome.
+#' @exportMethod show
+#' 
+#' @aliases show,Proteome-method
+setMethod("show", "Proteome", function(object){
+  cat("This is an object of Proteome\n", 
+      "type:", object@type, "\n", 
+      "species:", object@species, "\n")
+  cat("head of proteome:\n")
+  head(object@proteome, n=3)
+})
+
 #' Class \code{dagBackground}.
 #' 
 #' An S4 class to represent a background composed of a formatted, 
@@ -112,6 +142,7 @@ setClass(
 #' @aliases dagBackground
 #' @exportClass dagBackground
 #' @import methods
+#' @return An object of class \code{dagBackground}
 #' 
 #' @author Jianhong Ou, Haibo Liu
 
@@ -120,6 +151,16 @@ setClass("dagBackground",
                         numSubsamples = "integer",
                         testType = "character"))
 
+#' @rdname dagBackground-class
+#' @param object an object of dagBackground.
+#' @exportMethod show
+#' 
+#' @aliases show,dagBackground-method
+setMethod("show", "dagBackground", function(object){
+  cat("This is an object of dagBackground\n", 
+      "testType:", object@testType, "\n", 
+      "numSubsamples:", object@numSubsamples, "\n")
+})
 
 #' Class \code{testDAUresults}.
 #' 
@@ -149,6 +190,7 @@ setClass("dagBackground",
 #' @aliases testDAUresults
 #' @exportClass testDAUresults
 #' @import methods
+#' @return An object of class \code{testDAUresults}
 #' 
 #' @author Jianhong Ou, Haibo Liu
 
@@ -194,3 +236,16 @@ setClass(
         re
     }
 )
+
+#' @rdname testDAUresults-class
+#' @param object an object of testDAUresults.
+#' @exportMethod show
+#' 
+#' @aliases show,testDAUresults-method
+setMethod("show", "testDAUresults", function(object){
+  cat("This is an object of testDAUresults\n", 
+      "group:", object@group, "\n", 
+      "testType:", object@testType, "\n", 
+      "upstreamOffset:", object@upstreamOffset, "\n", 
+      "downstreamOffset:", object@downstreamOffset, "\n")
+})

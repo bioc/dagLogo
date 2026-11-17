@@ -3,7 +3,6 @@
 \docType{package}
 \name{dagLogo-package}
 \alias{dagLogo-package}
-\alias{_PACKAGE}
 \title{Visualize significant conserved peptide sequence pattern in groups
 based on the probability theory}
 \description{
@@ -31,6 +30,7 @@ DAG: Differential Amino acid Group
 \examples{
   data("seq.example")
   data("proteome.example")
+  set.seed(42)
   bg <- buildBackgroundModel(seq.example, proteome=proteome.example, numSubsamples=10L)
   t <- testDAU(seq.example, bg)
   dagLogo(t)

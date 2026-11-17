@@ -60,6 +60,7 @@ getData <- function(type, testDAUresults)
 #' @examples
 #' data("seq.example")
 #' data("proteome.example")
+#' set.seed(42)
 #' bg <- buildBackgroundModel(seq.example, proteome=proteome.example, 
 #'                            numSubsamples=10)
 #' t0 <- testDAU(seq.example, bg)
@@ -67,7 +68,7 @@ getData <- function(type, testDAUresults)
 
 dagHeatmap <-function(testDAUresults, type = c("diff", "statistics"), ...) 
 {
-  if (missing(testDAUresults) || class(testDAUresults) != "testDAUresults") 
+  if (missing(testDAUresults) || !is(testDAUresults, "testDAUresults")) 
   {
     stop("testDAUresults should be an object of testDAUresults\n
          Please try ?testDAU to get help.", call. = FALSE)
@@ -339,6 +340,7 @@ plotMarkers <- function(markers, dw, x0, h, lo=NULL){
 #' @examples 
 #' data('seq.example') 
 #' data('proteome.example')
+#' set.seed(42)
 #' bg <- buildBackgroundModel(seq.example, proteome=proteome.example, 
 #'                            numSubsamples=10, testType = "ztest")
 #' t0 <- testDAU(seq.example, bg)
@@ -373,7 +375,7 @@ dagLogo <- function(testDAUresults,
                     labels = NULL, alpha=1,
                     markers = list()) 
 {
-  if (missing(testDAUresults) || class(testDAUresults) != "testDAUresults") 
+  if (missing(testDAUresults) || !is(testDAUresults, "testDAUresults")) 
   {
     stop("testDAUresults should be an object of testDAUresults\n
          Please try ?testDAU to get help.", call. = FALSE)

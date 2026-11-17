@@ -120,11 +120,11 @@ fetchSequence <-function(IDs,
     {
         stop("Need mart or proteome for fetching sequences.", call. = FALSE)
     }
-    if (!missing(mart) && class(mart) != "Mart") 
+    if (!missing(mart) && !is(mart, "Mart")) 
     {
         stop("mart should be an object of the Mart class", call. = FALSE)
     }
-    if (!missing(proteome) && class(proteome) != "Proteome") 
+    if (!missing(proteome) && !is(proteome, "Proteome")) 
     {
         stop("proteome should be an object of Proteome class.",
             "Try ?prepareProteome to get help.", call. = FALSE)
@@ -148,7 +148,7 @@ fetchSequence <-function(IDs,
     {
         stop("Missing required parameter IDs or anchorPos", call. = FALSE)
     }
-    if (class(IDs) != "character" ||
+    if (!is.character(IDs) ||
         !inherits(anchorPos, c("character", "numeric", "integer"))) 
     {
         stop("IDs must be characters and anchorPos should be a character or number",

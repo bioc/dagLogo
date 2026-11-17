@@ -30,6 +30,7 @@
 #' @examples
 #'   data("seq.example")
 #'   data("proteome.example")
+#'   set.seed(42)
 #'   bg <- buildBackgroundModel(seq.example, proteome=proteome.example, numSubsamples=10L)
 #'   t <- testDAU(seq.example, bg)
 #'   dagLogo(t)

@@ -4,7 +4,17 @@
 \name{testDAUresults-class}
 \alias{testDAUresults-class}
 \alias{testDAUresults}
+\alias{show,testDAUresults-method}
 \title{Class \code{testDAUresults}.}
+\usage{
+\S4method{show}{testDAUresults}(object)
+}
+\arguments{
+\item{object}{an object of testDAUresults.}
+}
+\value{
+An object of class \code{testDAUresults}
+}
 \description{
 An S4 class to represent a DAU statistical test result from dagLogo analysis.
 }

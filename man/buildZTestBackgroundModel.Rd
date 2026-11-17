@@ -8,7 +8,6 @@ buildZTestBackgroundModel(
   dagPeptides,
   matches,
   numSubsamples = 30L,
-  rand.seed = 1,
   testType = "ztest",
   replacement = FALSE
 )
@@ -20,8 +19,6 @@ peptide sequences as the input set.}
 \item{matches}{A character vector with the matched subsequences.}
 
 \item{numSubsamples}{An integer, the number of random sampling.}
-
-\item{rand.seed}{An integer, the seed used to perform random sampling.}
 
 \item{replacement}{A logical vector of length 1, indicating whether replacement 
 is allowed for random sampling.}

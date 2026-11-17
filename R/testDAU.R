@@ -112,6 +112,7 @@ addScheme <- function(color = vector("character"),
 #' ##prepare an object of dagPeptides Class
 #' seq <- formatSequence(seq = dat, proteome = proteome, upstreamOffset = 14,
 #'                      downstreamOffset = 15)
+#' set.seed(42)
 #' bg_fisher <- buildBackgroundModel(seq, background = "wholeProteome",
 #'                                   proteome = proteome, testType = "fisher")
 #' bg_ztest <- buildBackgroundModel(seq, background = "wholeProteome",
@@ -144,13 +145,13 @@ testDAU <- function(dagPeptides,
                     bgNoise = NA,
                     method = "none") 
 {
-    if (missing(dagPeptides) || class(dagPeptides) != "dagPeptides") 
+    if (missing(dagPeptides) || !is(dagPeptides, "dagPeptides")) 
     {
         stop("dagPeptides should be an object of dagPeptides class.\n
             Please try ?fetchSequence to get help.",
              call. = FALSE)
     }
-    if (missing(dagBackground) || class(dagBackground) != "dagBackground") 
+    if (missing(dagBackground) || !is(dagBackground, "dagBackground")) 
     {
         stop("dagBackground should be an object of dagBackground class .\n
             Please try ?buildBackgroundModel to get help.",

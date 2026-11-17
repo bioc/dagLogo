@@ -4,8 +4,18 @@
 \name{dagPeptides-class}
 \alias{dagPeptides-class}
 \alias{dagPeptides}
+\alias{show,dagPeptides-method}
 \title{Class \code{\link{dagPeptides}}.
 An S4 class to represent formatted, aligned peptides for dagLogo analysis.}
+\usage{
+\S4method{show}{dagPeptides}(object)
+}
+\arguments{
+\item{object}{an object of dagPeptides.}
+}
+\value{
+An object of class \code{dagPeptides}
+}
 \description{
 Class \code{\link{dagPeptides}}.
 An S4 class to represent formatted, aligned peptides for dagLogo analysis.

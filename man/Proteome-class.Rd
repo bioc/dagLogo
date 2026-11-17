@@ -4,7 +4,17 @@
 \name{Proteome-class}
 \alias{Proteome-class}
 \alias{Proteome}
+\alias{show,Proteome-method}
 \title{Class \code{\link{Proteome}}.}
+\usage{
+\S4method{show}{Proteome}(object)
+}
+\arguments{
+\item{object}{an object of Proteome.}
+}
+\value{
+An object of class \code{dagPeptides}
+}
 \description{
 An S4 class to represent a whole proteome for dagLogo analysis.
 }

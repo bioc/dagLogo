@@ -1,4 +1,5 @@
 test_that("test_testDAU_group", {
+    set.seed(1)
     bg <- buildBackgroundModel(seq.example, proteome = proteome.example, 
         numSubsamples = 10L)
     t <- testDAU(seq.example, bg)

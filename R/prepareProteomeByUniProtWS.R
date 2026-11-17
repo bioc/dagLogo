@@ -4,8 +4,8 @@
 #' the UniProt database of an organism of a given species' scientific name,
 #' or by using peptide sequences in a fasta file or in an AAStringSet object.
 #' 
-#' @param UniProt.ws An object of \code{\link{UniProt.ws}}.
-#' @param fasta A fasta file name or an object of \code{\link{AAStringSet}}.
+#' @param UniProt.ws An object of \code{\link[UniProt.ws:UniProt.ws-class]{UniProt.ws}}.
+#' @param fasta A fasta file name or an object of \code{\link[Biostrings:XStringSet-class]{AAStringSet}}.
 #' @param species An character vector of length (1) to designate the species
 #' of the proteome
 #' @importFrom Biostrings readAAStringSet
@@ -23,7 +23,7 @@
 #' @keywords misc
 
 prepareProteomeByUniProtWS <- function(UniProt.ws, fasta, species="unknown"){
-    if(!missing(UniProt.ws) && class(UniProt.ws)=="UniProt.ws"){
+    if(!missing(UniProt.ws) && is(UniProt.ws, "UniProt.ws")){
         egs <- keys(UniProt.ws, "ENTREZ_GENE")
         cols <- c("SEQUENCE", "ID")
         proteome <- select(UniProt.ws, egs, cols, "ENTREZ_GENE")
@@ -35,10 +35,10 @@ prepareProteomeByUniProtWS <- function(UniProt.ws, fasta, species="unknown"){
                    species=species))
     } else {
         if(!missing(fasta)){
-            if(length(fasta)==1 && class(fasta)=="character"){
+            if(length(fasta)==1 && is.character(fasta)){
                 fasta <- readAAStringSet(fasta)
             }
-            if(class(fasta)!="AAStringSet"){
+            if(!is(fasta, "AAStringSet")){
                 stop("fasta should be character or an object of AAStringSet",
                      call.=FALSE)
             }

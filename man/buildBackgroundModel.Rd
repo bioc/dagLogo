@@ -11,7 +11,6 @@ buildBackgroundModel(
   targetPosition = c("any", "Nterminus", "Cterminus"),
   uniqueSeq = FALSE,
   numSubsamples = 300L,
-  rand.seed = 1,
   replacement = FALSE,
   testType = c("ztest", "fisher"),
   proteome
@@ -36,8 +35,6 @@ be used to generate a background model.}
 are included in a background model for sampling.}
 
 \item{numSubsamples}{An integer, the number of random sampling.}
-
-\item{rand.seed}{An integer, the seed used to perform random sampling}
 
 \item{replacement}{A logical vector of length 1, indicating whether replacement 
 is allowed for random sampling.}
@@ -97,6 +94,7 @@ proteome <- prepareProteome(fasta = system.file("extdata",
 ##prepare an object of dagPeptides Class
 seq <- formatSequence(seq = dat, proteome = proteome, upstreamOffset = 14,
                      downstreamOffset = 15)
+set.seed(42)
 bg_fisher <- buildBackgroundModel(seq, background = "wholeProteome", 
                                   proteome = proteome, testType = "fisher")
 bg_ztest <- buildBackgroundModel(seq, background = "wholeProteome",

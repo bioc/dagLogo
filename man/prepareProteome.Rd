@@ -7,7 +7,7 @@
 prepareProteome(source, fasta, species = "unknown", ...)
 }
 \arguments{
-\item{source}{An object of \code{\link{UniProt.ws}} or A character "UniProt".}
+\item{source}{An object of \code{\link[UniProt.ws:UniProt.ws-class]{UniProt.ws}} or A character "UniProt".}
 
 \item{fasta}{fasta file name or an object of AAStringSet}
 

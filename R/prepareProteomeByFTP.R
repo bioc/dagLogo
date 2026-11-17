@@ -127,12 +127,12 @@ prepareProteomeByFTP <- function(source = "UniProt", taxonID = NULL, species = N
     }
   } else if (!missing(fastaFile)) ## prepare Proteome from a fasta file
   {
-    if (length(fastaFile) == 1 && class(fastaFile) == "character") 
+    if (length(fastaFile) == 1 && is.character(fastaFile)) 
     {
       fasta <- readAAStringSet(fastaFile)
       isFromUniProt <- FALSE
     }
-    if (class(fasta) != "AAStringSet") 
+    if (!is(fasta, "AAStringSet")) 
     {
       stop("fasta should be an object of AAStringSet",
            call. = FALSE)

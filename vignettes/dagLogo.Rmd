@@ -14,7 +14,7 @@ output:
   BiocStyle::html_document
 ---
 
-```{r echo=FALSE, results='hide', warning=FALSE, message=FALSE}
+```{r setup, echo=FALSE, results='hide', warning=FALSE, message=FALSE}
 suppressPackageStartupMessages({
     library(dagLogo)
     library(biomaRt)
@@ -23,6 +23,7 @@ suppressPackageStartupMessages({
     library(Biostrings)
     library(grDevices)
     })
+knitr::opts_chunk$set(warning = FALSE)
 ```
 
 # Introduction
@@ -152,7 +153,7 @@ Similarly, peptide sequences can be fetched from an object of Proteome.
 
 ```{r formatSequence, results='hide'}
 dat <- unlist(read.delim(system.file("extdata", "grB.txt", package = "dagLogo"),
-                        header = F, as.is = TRUE))
+                        header = FALSE, as.is = TRUE))
 ##prepare proteome from a fasta file, 
 ##the fastq file is subset of human proteome for this vignette. 
 proteome <- prepareProteome(fasta = system.file("extdata",
@@ -179,6 +180,7 @@ if(interactive()){
 The prepared `Proteome` object can be used as a background model for the following statistical significance test using Fisher’s exact test or *Z*-test.
 
 ```{r buildBackgroundModel}
+set.seed(42)
 bg_fisher <- buildBackgroundModel(seq, background = "wholeProteome", 
                                   proteome = proteome, testType = "fisher")
 bg_ztest <- buildBackgroundModel(seq, background = "wholeProteome", 

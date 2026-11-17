@@ -28,6 +28,7 @@ Using a heatmap to visualize results of testing differential amino acid usage.
 \examples{
 data("seq.example")
 data("proteome.example")
+set.seed(42)
 bg <- buildBackgroundModel(seq.example, proteome=proteome.example, 
                            numSubsamples=10)
 t0 <- testDAU(seq.example, bg)

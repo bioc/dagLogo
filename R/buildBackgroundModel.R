@@ -25,7 +25,6 @@ initiateBackgroundModel <- function(background, numSubsamples = 1L, testType)
 #' peptide sequences as the input set.
 #' @param matches A character vector with the matched subsequences.
 #' @param numSubsamples An integer, the number of random sampling.
-#' @param rand.seed An integer, the seed used to perform random sampling.
 #' @param replacement A logical vector of length 1, indicating whether replacement 
 #' is allowed for random sampling.
 #'
@@ -37,7 +36,6 @@ initiateBackgroundModel <- function(background, numSubsamples = 1L, testType)
 buildZTestBackgroundModel <- function(dagPeptides,
                                       matches,
                                       numSubsamples = 30L,
-                                      rand.seed = 1,
                                       testType = "ztest",
                                       replacement = FALSE)
 {
@@ -47,7 +45,6 @@ buildZTestBackgroundModel <- function(dagPeptides,
   }
   
   #### sampling the same number of subsequences from background as the experiment set
-  set.seed(rand.seed)
   n <- nrow(dagPeptides@data)
   
   if (length(matches) < n){
@@ -84,7 +81,6 @@ buildZTestBackgroundModel <- function(dagPeptides,
 #' @param uniqueSeq A logical vector indicating whether only unique peptide sequences
 #' are included in a background model for sampling.
 #' @param numSubsamples An integer, the number of random sampling.
-#' @param rand.seed An integer, the seed used to perform random sampling
 #' @param replacement A logical vector of length 1, indicating whether replacement 
 #' is allowed for random sampling.
 #' @param testType A character vector of length 1. Available options are "ztest" 
@@ -138,6 +134,7 @@ buildZTestBackgroundModel <- function(dagPeptides,
 #' ##prepare an object of dagPeptides Class
 #' seq <- formatSequence(seq = dat, proteome = proteome, upstreamOffset = 14,
 #'                      downstreamOffset = 15)
+#' set.seed(42)
 #' bg_fisher <- buildBackgroundModel(seq, background = "wholeProteome", 
 #'                                   proteome = proteome, testType = "fisher")
 #' bg_ztest <- buildBackgroundModel(seq, background = "wholeProteome",
@@ -149,12 +146,11 @@ buildBackgroundModel <- function(dagPeptides,
                                  targetPosition = c("any", "Nterminus", "Cterminus"),
                                  uniqueSeq = FALSE,
                                  numSubsamples = 300L,
-                                 rand.seed = 1,
                                  replacement = FALSE,
                                  testType = c("ztest", "fisher"),
                                  proteome) 
 {
-  if (missing(dagPeptides) || class(dagPeptides) != "dagPeptides") {
+  if (missing(dagPeptides) || !is(dagPeptides, "dagPeptides")) {
     stop("dagPeptides should be an object of dagPeptides Class.", call. = FALSE)
   }
   background <- match.arg(background)
@@ -170,7 +166,7 @@ buildBackgroundModel <- function(dagPeptides,
   
   ## Decide what set of peptide sequences should be used to build the background model
   if (background != "inputSet") {
-    if (missing(proteome) || class(proteome) != "Proteome") {
+    if (missing(proteome) || !is(proteome, "Proteome")) {
       stop("proteome should be an object of the Proteome Class.\n
            Try ?prepareProteome to get help", call. = FALSE)
     }
@@ -244,7 +240,6 @@ buildBackgroundModel <- function(dagPeptides,
         matches = matches,
         testType = testType,
         numSubsamples = as.integer(numSubsamples),
-        rand.seed = rand.seed,
         replacement = replacement)
   }
   backgroundModel

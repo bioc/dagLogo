@@ -18,33 +18,47 @@ exportClasses(Proteome)
 exportClasses(dagBackground)
 exportClasses(dagPeptides)
 exportClasses(testDAUresults)
+exportMethods(show)
 import(biomaRt)
 import(grid)
 import(methods)
 import(pheatmap)
 importClassesFrom(motifStack,marker)
 importFrom(BiocGenerics,start)
-importFrom(Biostrings,AAString)
-importFrom(Biostrings,matchPattern)
-importFrom(Biostrings,readAAStringSet)
-importFrom(UniProt.ws,availableUniprotSpecies)
-importFrom(UniProt.ws,lookupUniprotSpeciesFromTaxId)
+importFrom(Biostrings,
+  AAString,
+  matchPattern,
+  readAAStringSet
+)
+importFrom(UniProt.ws,
+  availableUniprotSpecies,
+  lookupUniprotSpeciesFromTaxId
+)
 importFrom(grDevices,dev.size)
 importFrom(graphics,plot.new)
-importFrom(grid,gList)
-importFrom(grid,linesGrob)
-importFrom(grid,rectGrob)
-importFrom(grid,textGrob)
-importFrom(httr,GET)
-importFrom(httr,content)
-importFrom(httr,status_code)
+importFrom(grid,
+  gList,
+  linesGrob,
+  rectGrob,
+  textGrob
+)
+importFrom(httr,
+  GET,
+  content,
+  status_code
+)
 importFrom(motifStack,plotMotifLogoA)
-importFrom(stats,fisher.test)
-importFrom(stats,p.adjust)
-importFrom(stats,p.adjust.methods)
-importFrom(stats,pnorm)
-importFrom(stats,rgamma)
-importFrom(stats,sd)
-importFrom(utils,adist)
-importFrom(utils,download.file)
-importFrom(utils,read.table)
+importFrom(stats,
+  fisher.test,
+  p.adjust,
+  p.adjust.methods,
+  pnorm,
+  rgamma,
+  sd
+)
+importFrom(utils,
+  adist,
+  download.file,
+  head,
+  read.table
+)

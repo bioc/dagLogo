@@ -7,9 +7,9 @@
 prepareProteomeByUniProtWS(UniProt.ws, fasta, species = "unknown")
 }
 \arguments{
-\item{UniProt.ws}{An object of \code{\link{UniProt.ws}}.}
+\item{UniProt.ws}{An object of \code{\link[UniProt.ws:UniProt.ws-class]{UniProt.ws}}.}
 
-\item{fasta}{A fasta file name or an object of \code{\link{AAStringSet}}.}
+\item{fasta}{A fasta file name or an object of \code{\link[Biostrings:XStringSet-class]{AAStringSet}}.}
 
 \item{species}{An character vector of length (1) to designate the species
 of the proteome}

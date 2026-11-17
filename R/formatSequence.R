@@ -39,7 +39,7 @@ formatSequence <-function(seq,
                           upstreamOffset,
                           downstreamOffset) 
 {
-  if (missing(proteome) || class(proteome) != "Proteome") 
+  if (missing(proteome) || !is(proteome, "Proteome")) 
   {
     stop("proteome should be an object of Proteome Class. \n
          Try ?prepareProteome to get help.",

@@ -1,6 +1,6 @@
 #' prepare proteome for background building
 #' @description prepare proteome from UniProt webserver or a fasta file
-#' @param source An object of \code{\link{UniProt.ws}} or A character "UniProt".
+#' @param source An object of \code{\link[UniProt.ws:UniProt.ws-class]{UniProt.ws}} or A character "UniProt".
 #' @param fasta fasta file name or an object of AAStringSet
 #' @param species an character to assign the species of the proteome
 #' @param ... parameters could be passed to \link{prepareProteomeByFTP}.

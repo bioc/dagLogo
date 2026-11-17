@@ -4,7 +4,17 @@
 \name{dagBackground-class}
 \alias{dagBackground-class}
 \alias{dagBackground}
+\alias{show,dagBackground-method}
 \title{Class \code{dagBackground}.}
+\usage{
+\S4method{show}{dagBackground}(object)
+}
+\arguments{
+\item{object}{an object of dagBackground.}
+}
+\value{
+An object of class \code{dagBackground}
+}
 \description{
 An S4 class to represent a background composed of a formatted, 
 aligned peptides for dagLogo analysis.

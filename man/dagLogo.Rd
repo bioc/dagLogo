@@ -62,6 +62,7 @@ of amino acids.
 \examples{
 data('seq.example') 
 data('proteome.example')
+set.seed(42)
 bg <- buildBackgroundModel(seq.example, proteome=proteome.example, 
                            numSubsamples=10, testType = "ztest")
 t0 <- testDAU(seq.example, bg)
